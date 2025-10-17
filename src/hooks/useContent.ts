@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Papa from 'papaparse'
-import { FirmZ, type FirmInput, LatLngTupleZ, EconomyZ, type Economy } from '../content/schema'
-import { NYC_CENTER, hashKey, placeholderPosition } from '../lib/map'
+import { FirmZ, type FirmInput, EconomyZ, type Economy } from '../content/schema'
 
 export type DatasetSource = 'base' | 'json' | 'csv' | 'all'
 
@@ -87,14 +86,6 @@ function normalizeFirm(input: any, fallbackId: number, source: FirmInput['__sour
   }
 }
 
-function withPlaceholderPosition(firm: FirmInput, seedStr: string): FirmInput {
-  if (!firm.position) {
-    const pos = placeholderPosition(hashKey(seedStr))
-    return { ...firm, position: pos }
-  }
-  return firm
-}
-
 function dedupeMerge(a: FirmInput[], b: FirmInput[]): FirmInput[] {
   const map = new Map<string, FirmInput>()
   const keyOf = (f: FirmInput) => `${f.firm_name}|${f.category}`.toLowerCase()
@@ -107,7 +98,7 @@ function dedupeMerge(a: FirmInput[], b: FirmInput[]): FirmInput[] {
       const merged: FirmInput = {
         ...prev,
         ...Object.fromEntries(Object.entries(f).filter(([k,v]) => (v !== undefined && v !== null && v !== ''))),
-        position: prev.position ?? f.position,
+        position: f.position ?? prev.position,
         __source: prev.__source === 'json' ? prev.__source : f.__source,
       }
       map.set(k, merged)
@@ -182,7 +173,6 @@ export function useContent() {
     else if (src === 'csv') final = csvFirms
     else final = dedupeMerge(dedupeMerge(baseValid, csvFirms), jsonFirms)
 
-    final = final.map(f => withPlaceholderPosition(f, f.firm_name))
     setFirms(final)
   }, [])
 

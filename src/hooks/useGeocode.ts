@@ -71,7 +71,7 @@ export function useGeocodeMissingPositions(firms: FirmInput[]) {
           setFirmPosition(f.id, pos)
         }
       } catch {}
-      await new Promise(r => setTimeout(r, 700))
+      await new Promise(r => setTimeout(r, 1100))
     }
   }, [firms, firmPositions, setFirmPosition])
 
