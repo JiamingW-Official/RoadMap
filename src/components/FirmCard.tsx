@@ -4,10 +4,12 @@ import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { CATEGORY_COLOR } from '../constants/firm-colors'
 import { useGameStore } from '../store/game'
+import { useToast } from './ui/toast'
 
 export function FirmCard({ firm }: { firm: any }) {
   const color = CATEGORY_COLOR[firm.category] ?? 'border-border/60'
   const applyDeal = useGameStore(s => s.applyDeal)
+  const { notify } = useToast()
   return (
     <Card className={`overflow-hidden border-2 ${color}`}>
       <CardHeader>
@@ -38,7 +40,7 @@ export function FirmCard({ firm }: { firm: any }) {
             ) : (
               <Button size="sm" disabled>No Website</Button>
             )}
-            <Button size="sm" variant="outline" onClick={()=>{ applyDeal(firm); }} data-cursor="interactive">Deal</Button>
+            <Button size="sm" variant="outline" onClick={()=>{ applyDeal(firm); notify(`Deal success with ${firm.firm_name}`) }} data-cursor="interactive">Deal</Button>
           </div>
         </div>
       </CardContent>

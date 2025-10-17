@@ -18,8 +18,47 @@ function inferRoundByCategory(category: string): FirmInput['round_stage'] {
 
 function toNegativeId(rowIndex: number) { return -(10000 + rowIndex) }
 
+const NYC_BOUNDS = { minLat: 40.40, maxLat: 41.10, minLng: -74.40, maxLng: -73.50 }
+function inNYC(lat:number, lng:number){
+  return lat>=NYC_BOUNDS.minLat && lat<=NYC_BOUNDS.maxLat && lng>=NYC_BOUNDS.minLng && lng<=NYC_BOUNDS.maxLng
+}
+
+function parseNum(v: any): number | undefined {
+  if (typeof v === 'number') return v
+  if (typeof v === 'string') {
+    const n = Number(v.trim())
+    return Number.isFinite(n) ? n : undefined
+  }
+  return undefined
+}
+
+function parsePosition(inputPos: any): [number, number] | undefined {
+  if (!inputPos) return undefined
+  // object with lat/lng
+  if (typeof inputPos === 'object' && !Array.isArray(inputPos)) {
+    const lat = parseNum(inputPos.lat ?? inputPos.latitude ?? inputPos.Lat ?? inputPos.Latitude)
+    const lng = parseNum(inputPos.lng ?? inputPos.lon ?? inputPos.longitude ?? inputPos.Longitude ?? inputPos.Lon)
+    if (lat !== undefined && lng !== undefined) return [lat, lng]
+  }
+  // array [a,b] might be [lat,lng] or [lng,lat]
+  if (Array.isArray(inputPos) && inputPos.length === 2) {
+    const a = parseNum(inputPos[0])
+    const b = parseNum(inputPos[1])
+    if (a !== undefined && b !== undefined) {
+      if (inNYC(a, b)) return [a, b]
+      if (inNYC(b, a)) return [b, a]
+      return [a, b] // fallback
+    }
+  }
+  return undefined
+}
+
 function normalizeFirm(input: any, fallbackId: number, source: FirmInput['__source']): FirmInput | null {
   try {
+    const lat = parseNum(input.lat ?? input.latitude ?? input.Lat ?? input.Latitude)
+    const lng = parseNum(input.lng ?? input.lon ?? input.longitude ?? input.Longitude ?? input.Lon)
+    let maybePos = (lat !== undefined && lng !== undefined) ? [lat, lng] as [number, number] : undefined
+    if (!maybePos) maybePos = parsePosition(input.position)
     const base: FirmInput = {
       id: typeof input.id === 'number' ? input.id : fallbackId,
       category: input.category,
@@ -31,14 +70,13 @@ function normalizeFirm(input: any, fallbackId: number, source: FirmInput['__sour
       cost_level: Number(input.cost_level ?? input['Cost Level (1-5)']) as any,
       required_capital_usd: input.required_capital_usd,
       round_stage: input.round_stage ?? inferRoundByCategory(input.category),
-      website: input.website,
+      website: input.website ?? input.Website,
       sector_focus: input.sector_focus,
-      valuation_increase_rate: typeof input.valuation_increase_rate === 'number' ? input.valuation_increase_rate : undefined,
-      equity_dilution_rate: typeof input.equity_dilution_rate === 'number' ? input.equity_dilution_rate : undefined,
-      reputation_effect: typeof input.reputation_effect === 'number' ? input.reputation_effect : undefined,
-      growth_speed_effect: typeof input.growth_speed_effect === 'number' ? input.growth_speed_effect : undefined,
-      position: Array.isArray(input.position) && input.position.length === 2 &&
-        typeof input.position[0] === 'number' && typeof input.position[1] === 'number' ? input.position as any : undefined,
+      valuation_increase_rate: typeof input.valuation_increase_rate === 'number' ? input.valuation_increase_rate : parseNum(input.valuation_increase_rate),
+      equity_dilution_rate: typeof input.equity_dilution_rate === 'number' ? input.equity_dilution_rate : parseNum(input.equity_dilution_rate),
+      reputation_effect: typeof input.reputation_effect === 'number' ? input.reputation_effect : parseNum(input.reputation_effect),
+      growth_speed_effect: typeof input.growth_speed_effect === 'number' ? input.growth_speed_effect : parseNum(input.growth_speed_effect),
+      position: maybePos,
       __source: source,
     }
     const parsed = FirmZ.safeParse(base)
@@ -66,7 +104,6 @@ function dedupeMerge(a: FirmInput[], b: FirmInput[]): FirmInput[] {
     if (!map.has(k)) map.set(k, f)
     else {
       const prev = map.get(k)!
-      // JSON 优先，CSV 补缺
       const merged: FirmInput = {
         ...prev,
         ...Object.fromEntries(Object.entries(f).filter(([k,v]) => (v !== undefined && v !== null && v !== ''))),
@@ -107,17 +144,19 @@ export function useContent() {
     const econValid = EconomyZ.safeParse(baseEconomy)
     if (econValid.success) setEconomy(econValid.data)
 
-    // JSON dataset
+    // JSON dataset (prefer root override, fallback to /datasets)
     let jsonFirms: FirmInput[] = []
     try {
-      const jf = await fetchJson<any[]>(`/datasets/nyc_firms.json`, [])
+      const jfRoot = await fetchJson<any[]>(`/nyc_firms.json`, null as any)
+      const jf = jfRoot ?? await fetchJson<any[]>(`/datasets/nyc_firms.json`, [])
       jsonFirms = jf.map((r, i) => normalizeFirm(r, toNegativeId(1000 + i), 'json')).filter(Boolean) as FirmInput[]
     } catch { /* noop */ }
 
-    // CSV dataset
+    // CSV dataset (prefer root override, fallback to /datasets)
     let csvFirms: FirmInput[] = []
     try {
-      const text = await fetch(`/datasets/nyc_firms.csv`).then(r => r.ok ? r.text() : '')
+      let text = await fetch(`/nyc_firms.csv`).then(r => r.ok ? r.text() : '')
+      if (!text) text = await fetch(`/datasets/nyc_firms.csv`).then(r => r.ok ? r.text() : '')
       const parsed = Papa.parse(text, { header: true, skipEmptyLines: true })
       csvFirms = (parsed.data as any[]).map((r, i) => normalizeFirm({
         id: toNegativeId(2000 + i),
@@ -130,6 +169,9 @@ export function useContent() {
         cost_level: r.cost_level ?? r['Cost Level (1-5)'],
         website: r.website ?? r.Website,
         round_stage: r.round_stage,
+        lat: r.lat ?? r.latitude ?? r.Latitude ?? r.Lat,
+        lng: r.lng ?? r.longitude ?? r.Longitude ?? r.Lon,
+        position: r.position
       }, toNegativeId(2000 + i), 'csv')).filter(Boolean) as FirmInput[]
       csvFirms = csvFirms.map(f => ({ ...f, round_stage: f.round_stage ?? inferRoundByCategory(f.category) }))
     } catch { /* noop */ }
