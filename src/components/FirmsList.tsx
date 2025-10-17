@@ -1,16 +1,15 @@
 import * as React from 'react'
 import { FirmCard } from './FirmCard'
-import { MOCK_FIRMS } from '../mock/firms'
-import { useSelection } from '../store/selection'
+import { useContentCtx } from '../ui/providers/ContentProvider'
 import { Button } from './ui/button'
 
 export function FirmsList() {
   const [q, setQ] = React.useState('')
-  const { setSelectedFirmId } = useSelection()
+  const { firms } = useContentCtx()
   const filtered = React.useMemo(() => {
     const t = q.toLowerCase()
-    return MOCK_FIRMS.filter(f => f.firm_name.toLowerCase().includes(t) || f.category.toLowerCase().includes(t) || f.city.toLowerCase().includes(t))
-  }, [q])
+    return firms.filter(f => f.firm_name.toLowerCase().includes(t) || f.category.toLowerCase().includes(t) || f.city.toLowerCase().includes(t))
+  }, [q, firms])
 
   return (
     <div className="grid gap-3">
@@ -23,9 +22,9 @@ export function FirmsList() {
       <div className="max-h-[60vh] overflow-auto grid gap-3 pr-1">
         {filtered.map(firm => (
           <div key={firm.id} className="grid gap-2">
-            <FirmCard firm={firm} />
+            <FirmCard firm={firm as any} />
             <div>
-              <Button size="sm" variant="outline" onClick={()=>setSelectedFirmId(firm.id)}>
+              <Button size="sm" variant="outline" data-cursor="interactive">
                 Focus on Map
               </Button>
             </div>

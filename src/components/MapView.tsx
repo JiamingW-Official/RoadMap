@@ -3,8 +3,8 @@ import * as React from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L, { type Map as LeafletMap, type Marker as LeafletMarker } from 'leaflet'
 import { NYC_CENTER, hashKey, placeholderPosition } from '../lib/map'
-import { MOCK_FIRMS } from '../mock/firms'
 import { useSelection } from '../store/selection'
+import { useContentCtx } from '../ui/providers/ContentProvider'
 
 const CATEGORY_HEX: Record<string, string> = {
   Angel: '#F5C518', // gold
@@ -56,16 +56,17 @@ function Basemap() {
 
 export function MapView() {
   const { selectedFirmId } = useSelection()
+  const { firms } = useContentCtx()
   const mapRef = React.useRef<LeafletMap | null>(null)
   const markerMapRef = React.useRef<Map<number, LeafletMarker>>(new Map())
 
   const firmsWithPos = React.useMemo(() => {
-    return MOCK_FIRMS.map((f) => {
+    return firms.map((f) => {
       const hasPos = Boolean(f.position)
       const pos = f.position ?? placeholderPosition(hashKey(f.firm_name))
       return { firm: f, pos, hasPos }
     })
-  }, [])
+  }, [firms])
 
   React.useEffect(() => {
     if (!selectedFirmId) return

@@ -1,0 +1,734 @@
+0 verbose cli /usr/local/bin/node /usr/local/bin/npm
+1 info using npm@10.9.3
+2 info using node@v22.19.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/jiamingw/Documents/GitHub/RoadMap/.npmrc
+5 silly config load:file:/Users/jiamingw/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm install zod papaparse zustand
+8 verbose argv "install" "--cache" ".npm-cache" "zod" "papaparse" "zustand"
+9 verbose logfile logs-max:10 dir:/Users/jiamingw/Documents/GitHub/RoadMap/.npm-cache/_logs/2025-10-17T00_03_30_594Z-
+10 verbose logfile /Users/jiamingw/Documents/GitHub/RoadMap/.npm-cache/_logs/2025-10-17T00_03_30_594Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 silly fetch manifest zod@*
+15 silly packumentCache full:https://registry.npmjs.org/zod cache-miss
+16 verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: node_modules
+17 http fetch GET 200 https://registry.npmjs.org/zod 514ms (cache miss)
+18 silly packumentCache full:https://registry.npmjs.org/zod set size:undefined disposed:false
+19 silly fetch manifest papaparse@*
+20 silly packumentCache full:https://registry.npmjs.org/papaparse cache-miss
+21 http fetch GET 200 https://registry.npmjs.org/papaparse 166ms (cache miss)
+22 silly packumentCache full:https://registry.npmjs.org/papaparse set size:undefined disposed:false
+23 silly fetch manifest zustand@*
+24 silly packumentCache full:https://registry.npmjs.org/zustand cache-miss
+25 http fetch GET 200 https://registry.npmjs.org/zustand 179ms (cache miss)
+26 silly packumentCache full:https://registry.npmjs.org/zustand set size:undefined disposed:false
+27 silly fetch manifest @types/react@^18.3.5
+28 silly packumentCache full:https://registry.npmjs.org/@types%2freact cache-miss
+29 http fetch GET 200 https://registry.npmjs.org/@types%2freact 499ms (cache revalidated)
+30 silly packumentCache full:https://registry.npmjs.org/@types%2freact set size:2504314 disposed:false
+31 silly fetch manifest immer@>=9.0.6
+32 silly packumentCache full:https://registry.npmjs.org/immer cache-miss
+33 http fetch GET 200 https://registry.npmjs.org/immer 246ms (cache miss)
+34 silly packumentCache full:https://registry.npmjs.org/immer set size:undefined disposed:false
+35 silly fetch manifest react@^18.3.1
+36 silly packumentCache full:https://registry.npmjs.org/react cache-miss
+37 http fetch GET 200 https://registry.npmjs.org/react 172ms (cache revalidated)
+38 silly packumentCache full:https://registry.npmjs.org/react set size:6173255 disposed:false
+39 silly fetch manifest use-sync-external-store@>=1.2.0
+40 silly packumentCache full:https://registry.npmjs.org/use-sync-external-store cache-miss
+41 http fetch GET 200 https://registry.npmjs.org/use-sync-external-store 252ms (cache miss)
+42 silly packumentCache full:https://registry.npmjs.org/use-sync-external-store set size:undefined disposed:false
+43 silly placeDep ROOT papaparse@5.5.3 OK for: nyc-startup-ipo-simulator@0.1.0 want: *
+44 silly placeDep ROOT zod@4.1.12 OK for: nyc-startup-ipo-simulator@0.1.0 want: *
+45 silly placeDep ROOT zustand@5.0.8 OK for: nyc-startup-ipo-simulator@0.1.0 want: *
+46 silly reify moves {}
+47 silly audit bulk request {
+47 silly audit   '@adobe/css-tools': [ '4.4.4' ],
+47 silly audit   '@alloc/quick-lru': [ '5.2.0' ],
+47 silly audit   '@asamuzakjp/css-color': [ '3.2.0' ],
+47 silly audit   '@babel/code-frame': [ '7.27.1' ],
+47 silly audit   '@babel/helper-validator-identifier': [ '7.27.1' ],
+47 silly audit   '@babel/runtime': [ '7.28.4' ],
+47 silly audit   '@csstools/color-helpers': [ '5.1.0' ],
+47 silly audit   '@csstools/css-calc': [ '2.1.4' ],
+47 silly audit   '@csstools/css-color-parser': [ '3.1.0' ],
+47 silly audit   '@csstools/css-parser-algorithms': [ '3.0.5' ],
+47 silly audit   '@csstools/css-tokenizer': [ '3.0.4' ],
+47 silly audit   '@esbuild/aix-ppc64': [ '0.21.5' ],
+47 silly audit   '@esbuild/android-arm': [ '0.21.5' ],
+47 silly audit   '@esbuild/android-arm64': [ '0.21.5' ],
+47 silly audit   '@esbuild/android-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/darwin-arm64': [ '0.21.5' ],
+47 silly audit   '@esbuild/darwin-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/freebsd-arm64': [ '0.21.5' ],
+47 silly audit   '@esbuild/freebsd-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-arm': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-arm64': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-ia32': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-loong64': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-mips64el': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-ppc64': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-riscv64': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-s390x': [ '0.21.5' ],
+47 silly audit   '@esbuild/linux-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/netbsd-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/openbsd-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/sunos-x64': [ '0.21.5' ],
+47 silly audit   '@esbuild/win32-arm64': [ '0.21.5' ],
+47 silly audit   '@esbuild/win32-ia32': [ '0.21.5' ],
+47 silly audit   '@esbuild/win32-x64': [ '0.21.5' ],
+47 silly audit   '@isaacs/cliui': [ '8.0.2' ],
+47 silly audit   '@jest/schemas': [ '29.6.3' ],
+47 silly audit   '@jridgewell/gen-mapping': [ '0.3.13' ],
+47 silly audit   '@jridgewell/resolve-uri': [ '3.1.2' ],
+47 silly audit   '@jridgewell/sourcemap-codec': [ '1.5.5' ],
+47 silly audit   '@jridgewell/trace-mapping': [ '0.3.31' ],
+47 silly audit   '@nodelib/fs.scandir': [ '2.1.5' ],
+47 silly audit   '@nodelib/fs.stat': [ '2.0.5' ],
+47 silly audit   '@nodelib/fs.walk': [ '1.2.8' ],
+47 silly audit   '@pkgjs/parseargs': [ '0.11.0' ],
+47 silly audit   '@radix-ui/react-compose-refs': [ '1.1.2' ],
+47 silly audit   '@radix-ui/react-slot': [ '1.2.3' ],
+47 silly audit   '@react-leaflet/core': [ '2.1.0' ],
+47 silly audit   '@remix-run/router': [ '1.23.0' ],
+47 silly audit   '@rolldown/pluginutils': [ '1.0.0-beta.27' ],
+47 silly audit   '@rollup/rollup-android-arm-eabi': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-android-arm64': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-darwin-arm64': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-darwin-x64': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-freebsd-arm64': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-freebsd-x64': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-arm-gnueabihf': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-arm-musleabihf': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-arm64-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-arm64-musl': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-loong64-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-ppc64-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-riscv64-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-riscv64-musl': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-s390x-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-x64-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-linux-x64-musl': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-openharmony-arm64': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-win32-arm64-msvc': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-win32-ia32-msvc': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-win32-x64-gnu': [ '4.52.4' ],
+47 silly audit   '@rollup/rollup-win32-x64-msvc': [ '4.52.4' ],
+47 silly audit   '@sinclair/typebox': [ '0.27.8' ],
+47 silly audit   '@swc/core': [ '1.13.5' ],
+47 silly audit   '@swc/core-darwin-arm64': [ '1.13.5' ],
+47 silly audit   '@swc/core-darwin-x64': [ '1.13.5' ],
+47 silly audit   '@swc/core-linux-arm-gnueabihf': [ '1.13.5' ],
+47 silly audit   '@swc/core-linux-arm64-gnu': [ '1.13.5' ],
+47 silly audit   '@swc/core-linux-arm64-musl': [ '1.13.5' ],
+47 silly audit   '@swc/core-linux-x64-gnu': [ '1.13.5' ],
+47 silly audit   '@swc/core-linux-x64-musl': [ '1.13.5' ],
+47 silly audit   '@swc/core-win32-arm64-msvc': [ '1.13.5' ],
+47 silly audit   '@swc/core-win32-ia32-msvc': [ '1.13.5' ],
+47 silly audit   '@swc/core-win32-x64-msvc': [ '1.13.5' ],
+47 silly audit   '@swc/counter': [ '0.1.3' ],
+47 silly audit   '@swc/types': [ '0.1.25' ],
+47 silly audit   '@testing-library/dom': [ '10.4.1' ],
+47 silly audit   '@testing-library/jest-dom': [ '6.9.1' ],
+47 silly audit   'dom-accessibility-api': [ '0.6.3', '0.5.16' ],
+47 silly audit   '@testing-library/react': [ '16.3.0' ],
+47 silly audit   '@testing-library/user-event': [ '14.6.1' ],
+47 silly audit   '@tsd/typescript': [ '5.4.5' ],
+47 silly audit   '@types/aria-query': [ '5.0.4' ],
+47 silly audit   '@types/eslint': [ '7.29.0' ],
+47 silly audit   '@types/estree': [ '1.0.8' ],
+47 silly audit   '@types/geojson': [ '7946.0.16' ],
+47 silly audit   '@types/jsdom': [ '21.1.7' ],
+47 silly audit   '@types/json-schema': [ '7.0.15' ],
+47 silly audit   '@types/leaflet': [ '1.9.21' ],
+47 silly audit   '@types/minimist': [ '1.2.5' ],
+47 silly audit   '@types/node': [ '24.8.0' ],
+47 silly audit   '@types/normalize-package-data': [ '2.4.4' ],
+47 silly audit   '@types/prop-types': [ '15.7.15' ],
+47 silly audit   '@types/react': [ '18.3.26' ],
+47 silly audit   '@types/react-dom': [ '18.3.7' ],
+47 silly audit   '@types/tough-cookie': [ '4.0.5' ],
+47 silly audit   '@vitejs/plugin-react-swc': [ '3.11.0' ],
+47 silly audit   '@vitest/expect': [ '2.1.9' ],
+47 silly audit   '@vitest/mocker': [ '2.1.9' ],
+47 silly audit   '@vitest/pretty-format': [ '2.1.9' ],
+47 silly audit   '@vitest/runner': [ '2.1.9' ],
+47 silly audit   '@vitest/snapshot': [ '2.1.9' ],
+47 silly audit   '@vitest/spy': [ '2.1.9' ],
+47 silly audit   '@vitest/utils': [ '2.1.9' ],
+47 silly audit   'agent-base': [ '7.1.4' ],
+47 silly audit   'ansi-escapes': [ '4.3.2' ],
+47 silly audit   'ansi-regex': [ '5.0.1', '6.2.2' ],
+47 silly audit   'ansi-styles': [ '5.2.0', '4.3.0', '6.2.3' ],
+47 silly audit   'any-promise': [ '1.3.0' ],
+47 silly audit   anymatch: [ '3.1.3' ],
+47 silly audit   arg: [ '5.0.2' ],
+47 silly audit   'aria-query': [ '5.3.0' ],
+47 silly audit   'array-union': [ '2.1.0' ],
+47 silly audit   arrify: [ '1.0.1' ],
+47 silly audit   'assertion-error': [ '2.0.1' ],
+47 silly audit   asynckit: [ '0.4.0' ],
+47 silly audit   autoprefixer: [ '10.4.21' ],
+47 silly audit   'balanced-match': [ '1.0.2' ],
+47 silly audit   'baseline-browser-mapping': [ '2.8.17' ],
+47 silly audit   'binary-extensions': [ '2.3.0' ],
+47 silly audit   'brace-expansion': [ '2.0.2' ],
+47 silly audit   braces: [ '3.0.3' ],
+47 silly audit   browserslist: [ '4.26.3' ],
+47 silly audit   cac: [ '6.7.14' ],
+47 silly audit   'call-bind-apply-helpers': [ '1.0.2' ],
+47 silly audit   camelcase: [ '5.3.1' ],
+47 silly audit   'camelcase-css': [ '2.0.1' ],
+47 silly audit   'camelcase-keys': [ '6.2.2' ],
+47 silly audit   'caniuse-lite': [ '1.0.30001751' ],
+47 silly audit   chai: [ '5.3.3' ],
+47 silly audit   chalk: [ '4.1.2' ],
+47 silly audit   'check-error': [ '2.1.1' ],
+47 silly audit   chokidar: [ '3.6.0' ],
+47 silly audit   'glob-parent': [ '5.1.2', '6.0.2' ],
+47 silly audit   'class-variance-authority': [ '0.7.1' ],
+47 silly audit   clsx: [ '2.1.1' ],
+47 silly audit   'color-convert': [ '2.0.1' ],
+47 silly audit   'color-name': [ '1.1.4' ],
+47 silly audit   'combined-stream': [ '1.0.8' ],
+47 silly audit   commander: [ '4.1.1' ],
+47 silly audit   'cross-spawn': [ '7.0.6' ],
+47 silly audit   'css.escape': [ '1.5.1' ],
+47 silly audit   cssesc: [ '3.0.0' ],
+47 silly audit   cssstyle: [ '4.6.0' ],
+47 silly audit   'rrweb-cssom': [ '0.8.0', '0.7.1' ],
+47 silly audit   csstype: [ '3.1.3' ],
+47 silly audit   'data-urls': [ '5.0.0' ],
+47 silly audit   debug: [ '4.4.3' ],
+47 silly audit   decamelize: [ '1.2.0' ],
+47 silly audit   'decamelize-keys': [ '1.1.1' ],
+47 silly audit   'map-obj': [ '1.0.1', '4.3.0' ],
+47 silly audit   'decimal.js': [ '10.6.0' ],
+47 silly audit   'deep-eql': [ '5.0.2' ],
+47 silly audit   'delayed-stream': [ '1.0.0' ],
+47 silly audit   dequal: [ '2.0.3' ],
+47 silly audit   didyoumean: [ '1.2.2' ],
+47 silly audit   'diff-sequences': [ '29.6.3' ],
+47 silly audit   'dir-glob': [ '3.0.1' ],
+47 silly audit   dlv: [ '1.1.3' ],
+47 silly audit   'dunder-proto': [ '1.0.1' ],
+47 silly audit   eastasianwidth: [ '0.2.0' ],
+47 silly audit   'electron-to-chromium': [ '1.5.237' ],
+47 silly audit   'emoji-regex': [ '9.2.2', '8.0.0' ],
+47 silly audit   entities: [ '6.0.1' ],
+47 silly audit   'error-ex': [ '1.3.4' ],
+47 silly audit   'es-define-property': [ '1.0.1' ],
+47 silly audit   'es-errors': [ '1.3.0' ],
+47 silly audit   'es-module-lexer': [ '1.7.0' ],
+47 silly audit   'es-object-atoms': [ '1.1.1' ],
+47 silly audit   'es-set-tostringtag': [ '2.1.0' ],
+47 silly audit   esbuild: [ '0.21.5' ],
+47 silly audit   escalade: [ '3.2.0' ],
+47 silly audit   'eslint-formatter-pretty': [ '4.1.0' ],
+47 silly audit   'string-width': [ '4.2.3', '5.1.2' ],
+47 silly audit   'strip-ansi': [ '6.0.1', '7.1.2' ],
+47 silly audit   'eslint-rule-docs': [ '1.1.235' ],
+47 silly audit   'estree-walker': [ '3.0.3' ],
+47 silly audit   'expect-type': [ '1.2.2' ],
+47 silly audit   'fast-glob': [ '3.3.3' ],
+47 silly audit   fastq: [ '1.19.1' ],
+47 silly audit   'fill-range': [ '7.1.1' ],
+47 silly audit   'find-up': [ '4.1.0' ],
+47 silly audit   'foreground-child': [ '3.3.1' ],
+47 silly audit   'form-data': [ '4.0.4' ],
+47 silly audit   'fraction.js': [ '4.3.7' ],
+47 silly audit   fsevents: [ '2.3.3' ],
+47 silly audit   'function-bind': [ '1.1.2' ],
+47 silly audit   'get-intrinsic': [ '1.3.0' ],
+47 silly audit   'get-proto': [ '1.0.1' ],
+47 silly audit   glob: [ '10.4.5' ],
+47 silly audit   globby: [ '11.1.0' ],
+47 silly audit   gopd: [ '1.2.0' ],
+47 silly audit   'hard-rejection': [ '2.1.0' ],
+47 silly audit   'has-flag': [ '4.0.0' ],
+47 silly audit   'has-symbols': [ '1.1.0' ],
+47 silly audit   'has-tostringtag': [ '1.0.2' ],
+47 silly audit   hasown: [ '2.0.2' ],
+47 silly audit   'hosted-git-info': [ '4.1.0', '2.8.9' ],
+47 silly audit   'lru-cache': [ '6.0.0', '10.4.3' ],
+47 silly audit   'html-encoding-sniffer': [ '4.0.0' ],
+47 silly audit   'http-proxy-agent': [ '7.0.2' ],
+47 silly audit   'https-proxy-agent': [ '7.0.6' ],
+47 silly audit   'iconv-lite': [ '0.6.3' ],
+47 silly audit   ignore: [ '5.3.2' ],
+47 silly audit   'indent-string': [ '4.0.0' ],
+47 silly audit   'irregular-plurals': [ '3.5.0' ],
+47 silly audit   'is-arrayish': [ '0.2.1' ],
+47 silly audit   'is-binary-path': [ '2.1.0' ],
+47 silly audit   'is-core-module': [ '2.16.1' ],
+47 silly audit   'is-extglob': [ '2.1.1' ],
+47 silly audit   'is-fullwidth-code-point': [ '3.0.0' ],
+47 silly audit   'is-glob': [ '4.0.3' ],
+47 silly audit   'is-number': [ '7.0.0' ],
+47 silly audit   'is-plain-obj': [ '1.1.0' ],
+47 silly audit   'is-potential-custom-element-name': [ '1.0.1' ],
+47 silly audit   'is-unicode-supported': [ '0.1.0' ],
+47 silly audit   isexe: [ '2.0.0' ],
+47 silly audit   jackspeak: [ '3.4.3' ],
+47 silly audit   'jest-diff': [ '29.7.0' ],
+47 silly audit   'pretty-format': [ '29.7.0', '27.5.1' ],
+47 silly audit   'react-is': [ '18.3.1', '17.0.2' ],
+47 silly audit   'jest-get-type': [ '29.6.3' ],
+47 silly audit   jiti: [ '1.21.7' ],
+47 silly audit   'js-tokens': [ '4.0.0' ],
+47 silly audit   jsdom: [ '25.0.1' ],
+47 silly audit   'json-parse-even-better-errors': [ '2.3.1' ],
+47 silly audit   'kind-of': [ '6.0.3' ],
+47 silly audit   leaflet: [ '1.9.4' ],
+47 silly audit   lilconfig: [ '3.1.3' ],
+47 silly audit   'lines-and-columns': [ '1.2.4' ],
+47 silly audit   'locate-path': [ '5.0.0' ],
+47 silly audit   'log-symbols': [ '4.1.0' ],
+47 silly audit   'loose-envify': [ '1.4.0' ],
+47 silly audit   loupe: [ '3.2.1' ],
+47 silly audit   'lucide-react': [ '0.454.0' ],
+47 silly audit   'lz-string': [ '1.5.0' ],
+47 silly audit   'magic-string': [ '0.30.19' ],
+47 silly audit   'math-intrinsics': [ '1.1.0' ],
+47 silly audit   meow: [ '9.0.0' ],
+47 silly audit   'type-fest': [ '0.18.1', '0.8.1', '0.6.0', '0.21.3' ],
+47 silly audit   merge2: [ '1.4.1' ],
+47 silly audit   micromatch: [ '4.0.8' ],
+47 silly audit   'mime-db': [ '1.52.0' ],
+47 silly audit   'mime-types': [ '2.1.35' ],
+47 silly audit   'min-indent': [ '1.0.1' ],
+47 silly audit   minimatch: [ '9.0.5' ],
+47 silly audit   'minimist-options': [ '4.1.0' ],
+47 silly audit   minipass: [ '7.1.2' ],
+47 silly audit   ms: [ '2.1.3' ],
+47 silly audit   mz: [ '2.7.0' ],
+47 silly audit   nanoid: [ '3.3.11' ],
+47 silly audit   'node-releases': [ '2.0.25' ],
+47 silly audit   'normalize-package-data': [ '3.0.3', '2.5.0' ],
+47 silly audit   'normalize-path': [ '3.0.0' ],
+47 silly audit   'normalize-range': [ '0.1.2' ],
+47 silly audit   nwsapi: [ '2.2.22' ],
+47 silly audit   'object-assign': [ '4.1.1' ],
+47 silly audit   'object-hash': [ '3.0.0' ],
+47 silly audit   'p-limit': [ '2.3.0' ],
+47 silly audit   'p-locate': [ '4.1.0' ],
+47 silly audit   'p-try': [ '2.2.0' ],
+47 silly audit   'package-json-from-dist': [ '1.0.1' ],
+47 silly audit   'parse-json': [ '5.2.0' ],
+47 silly audit   parse5: [ '7.3.0' ],
+47 silly audit   'path-exists': [ '4.0.0' ],
+47 silly audit   'path-key': [ '3.1.1' ],
+47 silly audit   'path-parse': [ '1.0.7' ],
+47 silly audit   'path-scurry': [ '1.11.1' ],
+47 silly audit   'path-type': [ '4.0.0' ],
+47 silly audit   pathe: [ '1.1.2' ],
+47 silly audit   pathval: [ '2.0.1' ],
+47 silly audit   picocolors: [ '1.1.1' ],
+47 silly audit   picomatch: [ '2.3.1' ],
+47 silly audit   pify: [ '2.3.0' ],
+47 silly audit   pirates: [ '4.0.7' ],
+47 silly audit   plur: [ '4.0.0' ],
+47 silly audit   postcss: [ '8.5.6' ],
+47 silly audit   'postcss-import': [ '15.1.0' ],
+47 silly audit   'postcss-js': [ '4.1.0' ],
+47 silly audit   'postcss-load-config': [ '6.0.1' ],
+47 silly audit   'postcss-nested': [ '6.2.0' ],
+47 silly audit   'postcss-selector-parser': [ '6.1.2' ],
+47 silly audit   'postcss-value-parser': [ '4.2.0' ],
+47 silly audit   punycode: [ '2.3.1' ],
+47 silly audit   'queue-microtask': [ '1.2.3' ],
+47 silly audit   'quick-lru': [ '4.0.1' ],
+47 silly audit   react: [ '18.3.1' ],
+47 silly audit   'react-dom': [ '18.3.1' ],
+47 silly audit   'react-leaflet': [ '4.2.1' ],
+47 silly audit   'react-router': [ '6.30.1' ],
+47 silly audit   'react-router-dom': [ '6.30.1' ],
+47 silly audit   'read-cache': [ '1.0.0' ],
+47 silly audit   'read-pkg': [ '5.2.0' ],
+47 silly audit   'read-pkg-up': [ '7.0.1' ],
+47 silly audit   semver: [ '5.7.2', '7.7.3' ],
+47 silly audit   readdirp: [ '3.6.0' ],
+47 silly audit   redent: [ '3.0.0' ],
+47 silly audit   resolve: [ '1.22.10' ],
+47 silly audit   reusify: [ '1.1.0' ],
+47 silly audit   rollup: [ '4.52.4' ],
+47 silly audit   'run-parallel': [ '1.2.0' ],
+47 silly audit   'safer-buffer': [ '2.1.2' ],
+47 silly audit   saxes: [ '6.0.0' ],
+47 silly audit   scheduler: [ '0.23.2' ],
+47 silly audit   'shebang-command': [ '2.0.0' ],
+47 silly audit   'shebang-regex': [ '3.0.0' ],
+47 silly audit   siginfo: [ '2.0.0' ],
+47 silly audit   'signal-exit': [ '4.1.0' ],
+47 silly audit   slash: [ '3.0.0' ],
+47 silly audit   'source-map-js': [ '1.2.1' ],
+47 silly audit   'spdx-correct': [ '3.2.0' ],
+47 silly audit   'spdx-exceptions': [ '2.5.0' ],
+47 silly audit   'spdx-expression-parse': [ '3.0.1' ],
+47 silly audit   'spdx-license-ids': [ '3.0.22' ],
+47 silly audit   stackback: [ '0.0.2' ],
+47 silly audit   'std-env': [ '3.10.0' ],
+47 silly audit   'strip-indent': [ '3.0.0' ],
+47 silly audit   sucrase: [ '3.35.0' ],
+47 silly audit   'supports-color': [ '7.2.0' ],
+47 silly audit   'supports-hyperlinks': [ '2.3.0' ],
+47 silly audit   'supports-preserve-symlinks-flag': [ '1.0.0' ],
+47 silly audit   'symbol-tree': [ '3.2.4' ],
+47 silly audit   'tailwind-merge': [ '2.6.0' ],
+47 silly audit   tailwindcss: [ '3.4.18' ],
+47 silly audit   'tailwindcss-animate': [ '1.0.7' ],
+47 silly audit   thenify: [ '3.3.1' ],
+47 silly audit   'thenify-all': [ '1.6.0' ],
+47 silly audit   tinybench: [ '2.9.0' ],
+47 silly audit   tinyexec: [ '0.3.2' ],
+47 silly audit   tinypool: [ '1.1.1' ],
+47 silly audit   tinyrainbow: [ '1.2.0' ],
+47 silly audit   tinyspy: [ '3.0.2' ],
+47 silly audit   tldts: [ '6.1.86' ],
+47 silly audit   'tldts-core': [ '6.1.86' ],
+47 silly audit   'to-regex-range': [ '5.0.1' ],
+47 silly audit   'tough-cookie': [ '5.1.2' ],
+47 silly audit   tr46: [ '5.1.1' ],
+47 silly audit   'trim-newlines': [ '3.0.1' ],
+47 silly audit   'ts-interface-checker': [ '0.1.13' ],
+47 silly audit   tsd: [ '0.31.2' ],
+47 silly audit   typescript: [ '5.6.3' ],
+47 silly audit   'undici-types': [ '7.14.0' ],
+47 silly audit   'update-browserslist-db': [ '1.1.3' ],
+47 silly audit   'util-deprecate': [ '1.0.2' ],
+47 silly audit   'validate-npm-package-license': [ '3.0.4' ],
+47 silly audit   vite: [ '5.4.20' ],
+47 silly audit   'vite-node': [ '2.1.9' ],
+47 silly audit   vitest: [ '2.1.9' ],
+47 silly audit   'w3c-xmlserializer': [ '5.0.0' ],
+47 silly audit   'webidl-conversions': [ '7.0.0' ],
+47 silly audit   'whatwg-encoding': [ '3.1.1' ],
+47 silly audit   'whatwg-mimetype': [ '4.0.0' ],
+47 silly audit   'whatwg-url': [ '14.2.0' ],
+47 silly audit   which: [ '2.0.2' ],
+47 silly audit   'why-is-node-running': [ '2.3.0' ],
+47 silly audit   'wrap-ansi': [ '8.1.0', '7.0.0' ],
+47 silly audit   ws: [ '8.18.3' ],
+47 silly audit   'xml-name-validator': [ '5.0.0' ],
+47 silly audit   xmlchars: [ '2.2.0' ],
+47 silly audit   yallist: [ '4.0.0' ],
+47 silly audit   'yargs-parser': [ '20.2.9' ],
+47 silly audit   papaparse: [ '5.5.3' ],
+47 silly audit   zod: [ '4.1.12' ],
+47 silly audit   zustand: [ '5.0.8' ]
+47 silly audit }
+48 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-win32-x64-msvc
+49 silly reify mark deleted [
+49 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-win32-x64-msvc'
+49 silly reify ]
+50 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-win32-ia32-msvc
+51 silly reify mark deleted [
+51 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-win32-ia32-msvc'
+51 silly reify ]
+52 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-win32-arm64-msvc
+53 silly reify mark deleted [
+53 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-win32-arm64-msvc'
+53 silly reify ]
+54 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-x64-musl
+55 silly reify mark deleted [
+55 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-x64-musl'
+55 silly reify ]
+56 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-x64-gnu
+57 silly reify mark deleted [
+57 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-x64-gnu'
+57 silly reify ]
+58 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-arm64-musl
+59 silly reify mark deleted [
+59 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-arm64-musl'
+59 silly reify ]
+60 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-arm64-gnu
+61 silly reify mark deleted [
+61 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-arm64-gnu'
+61 silly reify ]
+62 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-arm-gnueabihf
+63 silly reify mark deleted [
+63 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-linux-arm-gnueabihf'
+63 silly reify ]
+64 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-darwin-x64
+65 silly reify mark deleted [
+65 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@swc/core-darwin-x64'
+65 silly reify ]
+66 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-x64-msvc
+67 silly reify mark deleted [
+67 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-x64-msvc'
+67 silly reify ]
+68 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-x64-gnu
+69 silly reify mark deleted [
+69 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-x64-gnu'
+69 silly reify ]
+70 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-ia32-msvc
+71 silly reify mark deleted [
+71 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-ia32-msvc'
+71 silly reify ]
+72 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-arm64-msvc
+73 silly reify mark deleted [
+73 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-win32-arm64-msvc'
+73 silly reify ]
+74 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-openharmony-arm64
+75 silly reify mark deleted [
+75 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-openharmony-arm64'
+75 silly reify ]
+76 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-x64-musl
+77 silly reify mark deleted [
+77 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-x64-musl'
+77 silly reify ]
+78 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-x64-gnu
+79 silly reify mark deleted [
+79 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-x64-gnu'
+79 silly reify ]
+80 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-s390x-gnu
+81 silly reify mark deleted [
+81 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-s390x-gnu'
+81 silly reify ]
+82 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-riscv64-musl
+83 silly reify mark deleted [
+83 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-riscv64-musl'
+83 silly reify ]
+84 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-riscv64-gnu
+85 silly reify mark deleted [
+85 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-riscv64-gnu'
+85 silly reify ]
+86 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-ppc64-gnu
+87 silly reify mark deleted [
+87 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-ppc64-gnu'
+87 silly reify ]
+88 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-loong64-gnu
+89 silly reify mark deleted [
+89 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-loong64-gnu'
+89 silly reify ]
+90 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm64-musl
+91 silly reify mark deleted [
+91 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm64-musl'
+91 silly reify ]
+92 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm64-gnu
+93 silly reify mark deleted [
+93 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm64-gnu'
+93 silly reify ]
+94 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm-musleabihf
+95 silly reify mark deleted [
+95 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm-musleabihf'
+95 silly reify ]
+96 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm-gnueabihf
+97 silly reify mark deleted [
+97 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-linux-arm-gnueabihf'
+97 silly reify ]
+98 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-freebsd-x64
+99 silly reify mark deleted [
+99 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-freebsd-x64'
+99 silly reify ]
+100 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-freebsd-arm64
+101 silly reify mark deleted [
+101 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-freebsd-arm64'
+101 silly reify ]
+102 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-darwin-x64
+103 silly reify mark deleted [
+103 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-darwin-x64'
+103 silly reify ]
+104 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-android-arm64
+105 silly reify mark deleted [
+105 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-android-arm64'
+105 silly reify ]
+106 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-android-arm-eabi
+107 silly reify mark deleted [
+107 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@rollup/rollup-android-arm-eabi'
+107 silly reify ]
+108 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/win32-x64
+109 silly reify mark deleted [
+109 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/win32-x64'
+109 silly reify ]
+110 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/win32-ia32
+111 silly reify mark deleted [
+111 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/win32-ia32'
+111 silly reify ]
+112 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/win32-arm64
+113 silly reify mark deleted [
+113 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/win32-arm64'
+113 silly reify ]
+114 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/sunos-x64
+115 silly reify mark deleted [
+115 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/sunos-x64'
+115 silly reify ]
+116 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/openbsd-x64
+117 silly reify mark deleted [
+117 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/openbsd-x64'
+117 silly reify ]
+118 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/netbsd-x64
+119 silly reify mark deleted [
+119 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/netbsd-x64'
+119 silly reify ]
+120 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-x64
+121 silly reify mark deleted [
+121 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-x64'
+121 silly reify ]
+122 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-s390x
+123 silly reify mark deleted [
+123 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-s390x'
+123 silly reify ]
+124 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-riscv64
+125 silly reify mark deleted [
+125 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-riscv64'
+125 silly reify ]
+126 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-ppc64
+127 silly reify mark deleted [
+127 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-ppc64'
+127 silly reify ]
+128 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-mips64el
+129 silly reify mark deleted [
+129 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-mips64el'
+129 silly reify ]
+130 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-loong64
+131 silly reify mark deleted [
+131 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-loong64'
+131 silly reify ]
+132 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-ia32
+133 silly reify mark deleted [
+133 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-ia32'
+133 silly reify ]
+134 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-arm64
+135 silly reify mark deleted [
+135 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-arm64'
+135 silly reify ]
+136 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-arm
+137 silly reify mark deleted [
+137 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/linux-arm'
+137 silly reify ]
+138 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/freebsd-x64
+139 silly reify mark deleted [
+139 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/freebsd-x64'
+139 silly reify ]
+140 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/freebsd-arm64
+141 silly reify mark deleted [
+141 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/freebsd-arm64'
+141 silly reify ]
+142 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/darwin-x64
+143 silly reify mark deleted [
+143 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/darwin-x64'
+143 silly reify ]
+144 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/android-x64
+145 silly reify mark deleted [
+145 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/android-x64'
+145 silly reify ]
+146 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/android-arm64
+147 silly reify mark deleted [
+147 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/android-arm64'
+147 silly reify ]
+148 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/android-arm
+149 silly reify mark deleted [
+149 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/android-arm'
+149 silly reify ]
+150 verbose reify failed optional dependency /Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/aix-ppc64
+151 silly reify mark deleted [
+151 silly reify   '/Users/jiamingw/Documents/GitHub/RoadMap/node_modules/@esbuild/aix-ppc64'
+151 silly reify ]
+152 http cache zustand@https://registry.npmjs.org/zustand/-/zustand-5.0.8.tgz 0ms (cache hit)
+153 http cache zod@https://registry.npmjs.org/zod/-/zod-4.1.12.tgz 0ms (cache hit)
+154 http cache papaparse@https://registry.npmjs.org/papaparse/-/papaparse-5.5.3.tgz 0ms (cache hit)
+155 http cache fsevents@https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz 0ms (cache hit)
+156 silly tarball no local data for zustand@https://registry.npmjs.org/zustand/-/zustand-5.0.8.tgz. Extracting by manifest.
+157 silly tarball no local data for zod@https://registry.npmjs.org/zod/-/zod-4.1.12.tgz. Extracting by manifest.
+158 silly tarball no local data for papaparse@https://registry.npmjs.org/papaparse/-/papaparse-5.5.3.tgz. Extracting by manifest.
+159 http fetch GET 200 https://registry.npmjs.org/zustand/-/zustand-5.0.8.tgz 175ms (cache miss)
+160 http fetch GET 200 https://registry.npmjs.org/papaparse/-/papaparse-5.5.3.tgz 175ms (cache miss)
+161 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 268ms
+162 silly audit report {
+162 silly audit report   esbuild: [
+162 silly audit report     {
+162 silly audit report       id: 1102341,
+162 silly audit report       url: 'https://github.com/advisories/GHSA-67mh-4wv8-2f99',
+162 silly audit report       title: 'esbuild enables any website to send any requests to the development server and read the response',
+162 silly audit report       severity: 'moderate',
+162 silly audit report       vulnerable_versions: '<=0.24.2',
+162 silly audit report       cwe: [Array],
+162 silly audit report       cvss: [Object]
+162 silly audit report     }
+162 silly audit report   ]
+162 silly audit report }
+163 silly packumentCache corgi:https://registry.npmjs.org/esbuild cache-miss
+164 http fetch GET 200 https://registry.npmjs.org/zod/-/zod-4.1.12.tgz 318ms (cache miss)
+165 http fetch GET 200 https://registry.npmjs.org/esbuild 191ms (cache revalidated)
+166 silly packumentCache corgi:https://registry.npmjs.org/esbuild set size:869842 disposed:false
+167 silly packumentCache corgi:https://registry.npmjs.org/vite cache-miss
+168 http fetch GET 200 https://registry.npmjs.org/vite 447ms (cache revalidated)
+169 silly packumentCache corgi:https://registry.npmjs.org/vite set size:2091848 disposed:false
+170 silly packumentCache corgi:https://registry.npmjs.org/@vitejs%2fplugin-react-swc cache-miss
+171 silly packumentCache corgi:https://registry.npmjs.org/@vitest%2fmocker cache-miss
+172 silly packumentCache corgi:https://registry.npmjs.org/vite-node cache-miss
+173 silly packumentCache corgi:https://registry.npmjs.org/vitest cache-miss
+174 http fetch GET 200 https://registry.npmjs.org/vitest 234ms (cache revalidated)
+175 silly packumentCache corgi:https://registry.npmjs.org/vitest set size:1136727 disposed:false
+176 http fetch GET 200 https://registry.npmjs.org/@vitest%2fmocker 247ms (cache revalidated)
+177 silly packumentCache corgi:https://registry.npmjs.org/@vitest%2fmocker set size:68402 disposed:false
+178 http fetch GET 200 https://registry.npmjs.org/vite-node 332ms (cache revalidated)
+179 silly packumentCache corgi:https://registry.npmjs.org/vite-node set size:444499 disposed:false
+180 http fetch GET 200 https://registry.npmjs.org/@vitejs%2fplugin-react-swc 512ms (cache revalidated)
+181 silly packumentCache corgi:https://registry.npmjs.org/@vitejs%2fplugin-react-swc set size:32691 disposed:false
+182 silly ADD node_modules/zustand
+183 silly ADD node_modules/zod
+184 silly ADD node_modules/papaparse
+185 silly ADD node_modules/fsevents
+186 silly ADD
+187 silly ADD
+188 silly ADD
+189 silly ADD
+190 silly ADD
+191 silly ADD
+192 silly ADD
+193 silly ADD
+194 silly ADD
+195 silly ADD
+196 silly ADD
+197 silly ADD
+198 silly ADD
+199 silly ADD
+200 silly ADD
+201 silly ADD
+202 silly ADD
+203 silly ADD
+204 silly ADD
+205 silly ADD
+206 silly ADD
+207 silly ADD
+208 silly ADD
+209 silly ADD
+210 silly ADD
+211 silly ADD
+212 silly ADD
+213 silly ADD
+214 silly ADD
+215 silly ADD
+216 silly ADD
+217 silly ADD
+218 silly ADD
+219 silly ADD
+220 silly ADD
+221 silly ADD
+222 silly ADD
+223 silly ADD
+224 silly ADD
+225 silly ADD
+226 silly ADD
+227 silly ADD
+228 silly ADD
+229 silly ADD
+230 silly ADD
+231 silly ADD
+232 silly ADD
+233 silly ADD
+234 silly ADD
+235 silly ADD
+236 silly ADD
+237 silly ADD
+238 verbose cwd /Users/jiamingw/Documents/GitHub/RoadMap
+239 verbose os Darwin 25.0.0
+240 verbose node v22.19.0
+241 verbose npm  v10.9.3
+242 verbose exit 0
+243 info ok
