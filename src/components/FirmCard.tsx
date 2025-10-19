@@ -1,9 +1,11 @@
 import * as React from 'react'
 import type { FirmInput } from '../content/schema'
+import type { FirmCategory } from '../types/firm'
 import { cn } from '../lib/utils'
 import { Button } from './ui/button'
 import { useGameStore } from '../store/game'
 import { useToast } from './ui/toast'
+import { CATEGORY_HEX } from '../constants/categories'
 
 interface FirmCardProps {
   firm: FirmInput
@@ -35,15 +37,17 @@ const stageShortMap: Record<string, string> = {
 
 export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
   const applyDeal = useGameStore((s) => s.applyDeal)
+  const canAct = useGameStore((s) => s.canActThisWeek())
   const { notify } = useToast()
   const stageRaw = firm.round_stage ?? 'Stage'
   const stageLabel = stageShortMap[stageRaw] ?? stageRaw
   const stageStyle = stageColors[stageRaw] ?? { bg: 'rgba(148,163,184,0.12)', border: 'rgba(148,163,184,0.35)', text: 'rgba(226,232,240,0.82)' }
+  const categoryColor = CATEGORY_HEX[firm.category as FirmCategory] ?? 'rgba(148,163,184,0.35)'
 
   return (
     <div
       className={cn(
-        'rounded-2xl border border-white/10 bg-background/45 backdrop-blur-md transition-all duration-200',
+        'group rounded-2xl border border-white/10 bg-background/45 backdrop-blur-md transition-all duration-200',
         selected
           ? 'border-accent/70 bg-background/70 shadow-[0_18px_45px_-25px_rgba(234,179,8,0.75)]'
           : 'hover:border-white/20 hover:bg-background/60'
@@ -54,14 +58,20 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
         type="button"
         onClick={onSelect}
         className={cn(
-          'flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors',
+          'relative flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors',
           selected ? 'bg-white/6' : 'hover:bg-white/4'
         )}
         data-cursor="interactive"
       >
+        <span
+          className="absolute left-3 top-2 bottom-2 w-1 rounded-full"
+          style={{ background: categoryColor }}
+          aria-hidden
+        />
         <div className="flex flex-col">
-          <span className="text-sm font-semibold text-foreground/95">{firm.firm_name}</span>
-          <span className="text-xs text-foreground/55">{firm.category}</span>
+          <span className="pl-4 text-sm font-semibold text-foreground/90 group-hover:text-foreground">
+            {firm.firm_name}
+          </span>
         </div>
         <span
           className="rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
@@ -117,10 +127,12 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
               variant="ghost"
               onClick={(e) => {
                 e.stopPropagation()
-                applyDeal(firm)
-                notify(`Deal success with ${firm.firm_name}`)
+                const success = applyDeal(firm)
+                if (success) notify(`Deal success with ${firm.firm_name}`)
+                else notify('No actions remaining this week. Advance to the next week.')
               }}
               data-cursor="interactive"
+              disabled={!canAct}
             >
               Deal
             </Button>

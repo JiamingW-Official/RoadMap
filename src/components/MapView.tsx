@@ -388,7 +388,7 @@ export function MapView() {
       </div>
       <MapContainer
         center={{ lat: NYC_CENTER[0], lng: NYC_CENTER[1] }}
-        zoom={12}
+        zoom={13}
         scrollWheelZoom
         zoomControl={false}
         className="h-full"

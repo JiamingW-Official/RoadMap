@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { App } from './ui/App'
+import { Boardroom } from './ui/Boardroom'
+import { Talent } from './ui/Talent'
 import { Settings } from './ui/Settings'
 import { SelectionProvider } from './store/selection'
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
+  { path: '/boardroom', element: <Boardroom /> },
+  { path: '/talent', element: <Talent /> },
   { path: '/settings', element: <Settings /> },
 ])
 

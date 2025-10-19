@@ -4,6 +4,7 @@ import { useSelection } from '../store/selection'
 import { useCategoryFilter } from '../store/categoryFilter'
 import { CATEGORY_ORDER, CATEGORY_HEX } from '../constants/categories'
 import type { FirmCategory } from '../types/firm'
+import { useNavigate } from 'react-router-dom'
 
 type CommandPaletteProps = {
   open: boolean
@@ -16,7 +17,9 @@ type CommandItem = {
   subtitle?: string
   section: string
   action: () => void
-  meta?: Record<string, unknown>
+  meta?: {
+    cat?: FirmCategory
+  }
 }
 
 export function CommandPalette({ open, onClose }: CommandPaletteProps) {
@@ -25,6 +28,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
   const toggleCategory = useCategoryFilter((s) => s.toggle)
   const resetCategories = useCategoryFilter((s) => s.reset)
   const active = useCategoryFilter((s) => s.active)
+  const navigate = useNavigate()
 
   const [query, setQuery] = React.useState('')
 
@@ -42,6 +46,26 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
   }, [open, onClose])
 
   const commands = React.useMemo<CommandItem[]>(() => {
+    const navigationCommands: CommandItem[] = [
+      {
+        id: 'nav-boardroom',
+        label: 'Navigate to Boardroom',
+        section: 'Navigation',
+        action: () => navigate('/boardroom'),
+      },
+      {
+        id: 'nav-talent',
+        label: 'Navigate to Talent Ops',
+        section: 'Navigation',
+        action: () => navigate('/talent'),
+      },
+      {
+        id: 'nav-dashboard',
+        label: 'Go to Command Center',
+        section: 'Navigation',
+        action: () => navigate('/'),
+      },
+    ]
     const firmCommands: CommandItem[] = firms.map((firm) => ({
       id: `firm-${firm.id}`,
       label: firm.firm_name,
@@ -60,6 +84,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     }))
 
     return [
+      ...navigationCommands,
       ...categoryCommands,
       {
         id: 'filters-reset',
@@ -69,7 +94,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       },
       ...firmCommands,
     ]
-  }, [firms, setSelectedFirmId, toggleCategory, resetCategories, active])
+  }, [firms, setSelectedFirmId, toggleCategory, resetCategories, active, navigate])
 
   const filtered = React.useMemo(() => {
     const t = query.trim().toLowerCase()

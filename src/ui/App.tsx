@@ -7,6 +7,7 @@ import { CursorDot } from './CursorDot'
 import { ContentProvider } from '../ui/providers/ContentProvider'
 import { Toaster } from '../components/ui/toast'
 import { CommandPalette } from '../components/CommandPalette'
+import { MarketTicker } from '../components/MarketTicker'
 
 export function App() {
   const [paletteOpen, setPaletteOpen] = React.useState(false)
@@ -51,6 +52,7 @@ export function App() {
             </div>
           </div>
           <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+          <MarketTicker />
           <CursorDot />
         </ContentProvider>
       </Toaster>
