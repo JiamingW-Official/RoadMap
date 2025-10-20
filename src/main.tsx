@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   { path: '/boardroom', element: <Boardroom /> },
   { path: '/talent', element: <Talent /> },
   { path: '/settings', element: <Settings /> },
-])
+], { basename: import.meta.env.BASE_URL })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

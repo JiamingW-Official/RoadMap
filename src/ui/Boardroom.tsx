@@ -6,6 +6,7 @@ import { CommandPalette } from '../components/CommandPalette'
 import { Toaster, useToast } from '../components/ui/toast'
 import { MarketTicker } from '../components/MarketTicker'
 import { useGameStore } from '../store/game'
+import { GlassLightingController } from './GlassLightingController'
 
 type BoardMemberProfile = {
   id: string
@@ -424,9 +425,9 @@ export function Boardroom() {
       <Toaster>
         <ContentProvider>
           <TopBar onOpenPalette={() => setPaletteOpen(true)} />
-          <div className="pt-20 h-[calc(100vh-80px)] w-full px-4 lg:px-8 pb-8">
-            <div className="grid h-full gap-6 lg:grid-cols-[300px_minmax(0,1fr)_360px]">
-              <aside className="glass rounded-xl border border-white/10 overflow-hidden flex flex-col">
+          <div className="pt-20 h-[calc(100vh-80px)] w-full px-4 lg:px-6 pb-6">
+            <div className="grid h-full gap-4 lg:grid-cols-[300px_minmax(0,1fr)_360px]">
+              <aside className="liquid-panel overflow-hidden flex flex-col">
                 <BoardRoster
                   members={boardMembers}
                   selectedMemberId={selectedMemberId}
@@ -434,9 +435,9 @@ export function Boardroom() {
                   stats={{ boardConfidence, capitalAlignment, riskHeat }}
                 />
               </aside>
-              <div className="glass rounded-xl border border-white/10 overflow-hidden flex flex-col">
+              <div className="liquid-panel overflow-hidden flex flex-col">
                 <BoardNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-                <div className="flex-1 min-h-0 overflow-auto px-4 md:px-6 pb-6">
+                <div className="flex-1 min-h-0 overflow-auto px-4 md:px-5 pb-5">
                   {activeTab === 'overview' && (
                     <BoardOverview
                       member={selectedMember}
@@ -477,7 +478,7 @@ export function Boardroom() {
                   )}
                 </div>
               </div>
-              <aside className="glass rounded-xl border border-white/10 overflow-hidden flex flex-col">
+              <aside className="liquid-panel overflow-hidden flex flex-col">
                 <BoardControlRail
                   proposals={BOARD_PROPOSALS}
                   supportLevels={supportLevels}
@@ -492,6 +493,8 @@ export function Boardroom() {
           <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
           <MarketTicker />
           <CursorDot />
+          <GlassDistortionDefs />
+          <GlassLightingController />
         </ContentProvider>
       </Toaster>
     </div>
@@ -511,12 +514,12 @@ function BoardRoster({
 }) {
   return (
     <div className="flex-1 min-h-0 flex flex-col">
-      <div className="px-5 py-4 border-b border-white/10">
+      <div className="px-4 py-3.5 border-b border-white/8">
         <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Board Control Room</div>
         <h2 className="text-lg font-semibold text-foreground/90">Director Roster</h2>
       </div>
-      <div className="px-5 py-4 space-y-4">
-        <div className="grid grid-cols-3 gap-3 text-xs">
+      <div className="px-4 py-3.5 space-y-3.5">
+        <div className="grid grid-cols-3 gap-2.5 text-xs">
           <StatBadge label="Confidence" value={`${stats.boardConfidence}%`} barValue={stats.boardConfidence} tone="bg-sky-500/70" />
           <StatBadge label="Alignment" value={`${stats.capitalAlignment}%`} barValue={stats.capitalAlignment} tone="bg-violet-500/70" />
           <StatBadge label="Risk Heat" value={`${stats.riskHeat}%`} barValue={stats.riskHeat} tone="bg-amber-500/70" />
@@ -525,19 +528,21 @@ function BoardRoster({
           Alignment calibrates operator + strategist voting power vs. investor bloc. Heat reflects tension around open initiatives.
         </div>
       </div>
-      <div className="border-t border-white/10 flex-1 overflow-auto thin-scroll px-5 pb-6 space-y-4">
+      <div className="border-t border-white/8 flex-1 overflow-auto thin-scroll px-4 pb-5 space-y-3.5">
         {members.map((member) => {
           const active = member.id === selectedMemberId
           return (
             <button
               key={member.id}
               onClick={() => onSelect(member.id)}
-              className={`w-full text-left rounded-lg border transition-colors ${
-                active ? 'border-accent/80 bg-accent/15 shadow-lg shadow-accent/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
-              }`}
+              className="group w-full text-left"
               data-cursor="interactive"
             >
-              <div className="p-4 flex items-start gap-4">
+              <div
+                className={`liquid-panel px-4 py-3.5 flex items-start gap-3 transition-all ${active ? '' : 'hover:border-white/20'}`}
+                data-active={active}
+                style={{ '--liquid-radius': '12px' } as React.CSSProperties}
+              >
                 <div className={`h-12 w-12 rounded-full bg-gradient-to-br ${member.avatarTint} flex items-center justify-center text-sm font-semibold text-foreground/90`}>
                   {member.name
                     .split(' ')
@@ -556,7 +561,7 @@ function BoardRoster({
                       <div className="text-foreground/50">Influence {member.influence}</div>
                     </div>
                   </div>
-                  <div className="mt-3 grid grid-cols-2 gap-3 text-[11px] text-foreground/60">
+                  <div className="mt-3 grid grid-cols-2 gap-2.5 text-[11px] text-foreground/60">
                     <span className="flex items-center gap-1">
                       <span className="h-2 w-2 rounded-full bg-emerald-400/70" />
                       {member.focus}
@@ -580,10 +585,10 @@ function BoardRoster({
 
 function StatBadge({ label, value, barValue, tone }: { label: string; value: string; barValue: number; tone: string }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
+    <div className="rounded-lg border border-white/10 bg-white/5 p-3.5 space-y-2.5">
       <div className="text-[10px] uppercase tracking-[0.14em] text-foreground/50">{label}</div>
       <div className="text-sm font-semibold text-foreground/90">{value}</div>
-      <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-[6px] rounded-full bg-white/10 overflow-hidden">
         <div className={`h-full ${tone}`} style={{ width: `${Math.min(100, Math.max(0, barValue))}%` }} />
       </div>
     </div>
@@ -592,21 +597,24 @@ function StatBadge({ label, value, barValue, tone }: { label: string; value: str
 
 function BoardNavigation({ activeTab, onTabChange }: { activeTab: BoardTab; onTabChange: (tab: BoardTab) => void }) {
   return (
-    <div className="px-5 py-4 border-b border-white/10">
-      <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Board View</div>
-      <div className="flex flex-wrap gap-2.5">
-        {BOARD_TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => onTabChange(tab.id)}
-            className={`px-3 py-1.5 rounded-md text-xs font-semibold tracking-[0.12em] transition ${
-              tab.id === activeTab ? 'bg-accent text-[hsl(20,14%,4%)]' : 'bg-white/10 text-foreground/60 hover:bg-white/15'
-            }`}
-            data-cursor="interactive"
-          >
-            {tab.label}
-          </button>
-        ))}
+    <div className="px-4 py-3.5 border-b border-white/8">
+      <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Board View</div>
+      <div className="flex flex-wrap gap-2">
+        {BOARD_TABS.map((tab) => {
+          const isActive = tab.id === activeTab
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={`liquid-panel px-3 py-1.5 text-xs font-semibold tracking-[0.12em] transition ${isActive ? '' : 'text-foreground/60 hover:border-white/20'}`}
+              style={{ '--liquid-radius': '10px' } as React.CSSProperties}
+              data-active={isActive}
+              data-cursor="interactive"
+            >
+              {tab.label}
+            </button>
+          )
+        })}
       </div>
     </div>
   )
@@ -628,13 +636,13 @@ function BoardOverview({
   onPingMember: (name: string) => void
 }) {
   return (
-    <div className="space-y-6 py-6">
+    <div className="space-y-5 py-5">
       <div>
-        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2">Featured Director</div>
+        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Featured Director</div>
         {member ? (
-          <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
-            <div className="grid gap-6 md:grid-cols-[220px_minmax(0,1fr)]">
-              <div className="p-5 border-r border-white/10 bg-gradient-to-br from-foreground/5 via-foreground/0 to-background">
+          <div className="liquid-panel overflow-hidden">
+            <div className="grid gap-4 md:grid-cols-[220px_minmax(0,1fr)]">
+              <div className="p-4 border-r border-white/8 bg-gradient-to-br from-foreground/5 via-transparent to-background">
                 <div className={`h-24 w-24 rounded-full bg-gradient-to-br ${member.avatarTint} flex items-center justify-center text-2xl font-semibold text-foreground/90`}>
                   {member.name
                     .split(' ')
@@ -642,7 +650,7 @@ function BoardOverview({
                     .join('')
                     .slice(0, 2)}
                 </div>
-                <div className="mt-4 text-lg font-semibold">{member.name}</div>
+                <div className="mt-4 text-lg font-semibold text-foreground/90">{member.name}</div>
                 <div className="text-sm text-foreground/60">{member.seat}</div>
                 <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
                   <MetricChip label="Voting" value={`${member.votingPower}%`} tone="bg-sky-500/70" />
@@ -651,20 +659,20 @@ function BoardOverview({
                   <MetricChip label="Heat" value={`${member.heat}%`} tone="bg-amber-500/70" />
                 </div>
               </div>
-              <div className="p-5 md:p-6 space-y-5">
+              <div className="p-4 md:p-5 space-y-4">
                 <div className="text-sm text-foreground/80 leading-relaxed">{member.biography}</div>
-                <div className="grid md:grid-cols-2 gap-4 text-xs">
-                  <div className="rounded-lg bg-white/5 border border-white/10 p-4">
-                    <div className="uppercase text-[10px] tracking-[0.14em] text-foreground/50 mb-2">Expertise</div>
+                <div className="grid md:grid-cols-2 gap-3.5 text-xs">
+                  <div className="rounded-lg border border-white/10 bg-white/5 p-3 space-y-2.5">
+                    <div className="uppercase text-[10px] tracking-[0.14em] text-foreground/50">Expertise</div>
                     <div className="flex flex-wrap gap-2">
                       {member.expertise.map((item) => (
-                        <span key={item} className="px-2 py-1 rounded bg-white/10">
+                        <span key={item} className="px-2 py-0.5 rounded bg-white/10 border border-white/10">
                           {item}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-white/5 border border-white/10 p-4 space-y-3">
+                  <div className="rounded-lg border border-white/10 bg-white/5 p-3 space-y-2.5">
                     <div className="uppercase text-[10px] tracking-[0.14em] text-foreground/50">Signal Feed</div>
                     <div className="text-sm text-foreground/80 leading-relaxed">{member.lastSignal}</div>
                     <button className="text-xs text-foreground/60 underline underline-offset-4 hover:text-foreground/90" onClick={() => onPingMember(member.name)}>
@@ -676,18 +684,18 @@ function BoardOverview({
             </div>
           </div>
         ) : (
-          <div className="rounded-lg border border-dashed border-white/20 p-6 text-sm text-foreground/60">No directors on record.</div>
+          <div className="liquid-panel border border-dashed border-white/25 p-5 text-sm text-foreground/60">No directors on record.</div>
         )}
       </div>
 
       <div>
-        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Active Proposals</div>
-        <div className="space-y-4">
+        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Active Proposals</div>
+        <div className="space-y-3.5">
           {proposals.map((proposal) => {
             const support = supportLevels[proposal.id] ?? proposal.baselineSupport
             return (
-              <div key={proposal.id} className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
+              <div key={proposal.id} className="liquid-panel p-4 md:p-5">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
                       <span className="text-xs uppercase tracking-[0.14em] text-foreground/50">{proposal.status}</span>
@@ -704,8 +712,8 @@ function BoardOverview({
                       ))}
                     </div>
                   </div>
-                  <div className="min-w-[220px] rounded-lg bg-background/60 border border-white/10 p-5 space-y-3.5">
-                    <div className="flex items-center justify-between text-xs text-foreground/60">
+                  <div className="min-w-[220px] rounded-lg border border-white/10 bg-background/70 p-4 space-y-3 text-xs text-foreground/60">
+                    <div className="flex items-center justify-between">
                       <span>Support</span>
                       <span className="text-foreground/80 font-semibold">{support}%</span>
                     </div>
@@ -740,9 +748,9 @@ function BoardOverview({
 
 function MetricChip({ label, value, tone }: { label: string; value: string; tone: string }) {
   return (
-    <div className="rounded-md border border-white/10 bg-white/10 px-2 py-1 text-[11px] flex items-center justify-between">
+    <div className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] flex items-center justify-between gap-3">
       <span className="text-foreground/60">{label}</span>
-      <span className={`ml-2 font-semibold text-foreground/90 ${tone ? '' : ''}`}>{value}</span>
+      <span className="font-semibold text-foreground/90">{value}</span>
     </div>
   )
 }
@@ -750,17 +758,17 @@ function MetricChip({ label, value, tone }: { label: string; value: string; tone
 function BoardMeetingsView({ meetings, onPrepare }: { meetings: BoardMeeting[]; onPrepare: (id: string) => void }) {
   const [expandedMeetingId, setExpandedMeetingId] = React.useState<string | null>(meetings[0]?.id ?? null)
   return (
-    <div className="py-6 space-y-6">
+    <div className="py-5 space-y-4">
       <div>
-        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Upcoming Cadence</div>
-        <div className="space-y-4">
+        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Upcoming Cadence</div>
+        <div className="space-y-3.5">
           {meetings.map((meeting) => {
             const expanded = expandedMeetingId === meeting.id
             return (
-              <div key={meeting.id} className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+              <div key={meeting.id} className="liquid-panel overflow-hidden">
                 <button
                   onClick={() => setExpandedMeetingId(expanded ? null : meeting.id)}
-                  className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 bg-white/5 hover:bg-white/10 transition"
+                  className="w-full text-left px-4 py-3 flex items-center justify-between gap-4 bg-white/0 hover:bg-white/5 transition"
                   data-cursor="interactive"
                 >
                   <div>
@@ -773,8 +781,8 @@ function BoardMeetingsView({ meetings, onPrepare }: { meetings: BoardMeeting[]; 
                   </div>
                 </button>
                 {expanded && (
-                  <div className="p-5 md:p-6 space-y-4 text-sm">
-                    <div className="grid md:grid-cols-3 gap-4 text-xs">
+                  <div className="p-4 md:p-5 space-y-3.5 text-sm">
+                    <div className="grid md:grid-cols-3 gap-3 text-xs">
                       <StatBadge label="Readiness" value={`${meeting.readiness}%`} barValue={meeting.readiness} tone="bg-emerald-500/70" />
                       <StatBadge label="Votes Needed" value={`${meeting.votesNeeded}`} barValue={Math.min(meeting.votesNeeded * 12, 100)} tone="bg-sky-500/70" />
                       <StatBadge label="Anchor" value={meeting.anchor} barValue={72} tone="bg-fuchsia-500/70" />
@@ -804,8 +812,8 @@ function BoardMeetingsView({ meetings, onPrepare }: { meetings: BoardMeeting[]; 
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6 text-sm text-foreground/70">
-        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Cadence Protocol</div>
+      <div className="liquid-panel p-4 md:p-5 text-sm text-foreground/70">
+        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Cadence Protocol</div>
         <p>
           Each board sprint locks 72h ahead. Directors submit async reads for agenda pillars, and the chair finalizes vote sequencing. Use &ldquo;Queue Prep Pack&rdquo; to auto-assemble briefs from ops telemetry.
         </p>
@@ -826,19 +834,19 @@ function BoardIntelligenceView({
   onScenarioShift: (index: number) => void
 }) {
   return (
-    <div className="py-6 space-y-6">
-      <div className="grid md:grid-cols-[minmax(0,1fr)_320px] gap-5">
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6">
-          <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Director Heat Radar</div>
-          <div className="grid sm:grid-cols-2 gap-4">
+    <div className="py-5 space-y-4">
+      <div className="grid md:grid-cols-[minmax(0,1fr)_320px] gap-4">
+        <div className="liquid-panel p-4 md:p-5">
+          <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Director Heat Radar</div>
+          <div className="grid sm:grid-cols-2 gap-3">
             {members.map((member) => (
-              <div key={member.id} className="rounded-lg border border-white/10 bg-background/60 p-4 space-y-3">
+              <div key={member.id} className="rounded-lg border border-white/10 bg-background/70 p-3 space-y-2.5">
                 <div className="flex items-center justify-between text-sm">
                   <span className="font-semibold text-foreground/80">{member.name}</span>
                   <span className="text-xs text-foreground/60">{member.faction}</span>
                 </div>
                 <div className="text-xs text-foreground/60">{member.focus}</div>
-                <div className="grid grid-cols-3 gap-3 text-[11px] text-foreground/60">
+                <div className="grid grid-cols-3 gap-2.5 text-[11px] text-foreground/60">
                   <HeatChip label="Support" value={`${member.confidence}%`} tone="bg-emerald-500/70" level={member.confidence} />
                   <HeatChip label="Influence" value={`${member.influence}`} tone="bg-sky-500/70" level={member.influence} />
                   <HeatChip label="Heat" value={`${member.heat}%`} tone="bg-amber-500/70" level={member.heat} />
@@ -847,8 +855,8 @@ function BoardIntelligenceView({
             ))}
           </div>
         </div>
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6 flex flex-col">
-          <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Scenario Switchboard</div>
+        <div className="liquid-panel p-4 md:p-5 flex flex-col">
+          <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Scenario Switchboard</div>
           <div className="flex flex-wrap gap-2.5 mb-4">
             {BOARD_SCENARIOS.map((item, idx) => (
               <button
@@ -863,10 +871,10 @@ function BoardIntelligenceView({
               </button>
             ))}
           </div>
-          <div className="rounded-lg border border-white/10 bg-background/70 p-5 space-y-4 text-sm text-foreground/70">
+          <div className="rounded-lg border border-white/10 bg-background/70 p-4 space-y-3 text-sm text-foreground/70">
             <div className="text-base font-semibold text-foreground/90">{scenario.title}</div>
             <p>{scenario.description}</p>
-            <div className="grid grid-cols-3 gap-3 text-xs">
+            <div className="grid grid-cols-3 gap-2.5 text-xs">
               <HeatChip label="Confidence" value={`${scenario.confidence}%`} tone="bg-emerald-500/70" level={scenario.confidence} />
               <HeatChip label="Burn Impact" value={`${scenario.burnImpact >= 0 ? '+' : ''}${scenario.burnImpact}%`} tone="bg-sky-500/70" level={Math.abs(scenario.burnImpact) * 5} />
               <HeatChip label="Runway Δ" value={`${scenario.runwayDelta >= 0 ? '+' : ''}${scenario.runwayDelta}w`} tone="bg-amber-500/70" level={Math.abs(scenario.runwayDelta) * 6} />
@@ -875,11 +883,11 @@ function BoardIntelligenceView({
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6">
-        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-3">Signal Feed</div>
-        <div className="grid md:grid-cols-3 gap-4">
+      <div className="liquid-panel p-4 md:p-5" style={{ '--liquid-radius': '12px' } as React.CSSProperties}>
+        <div className="text-xs uppercase tracking-[0.14em] text-foreground/50 mb-2.5">Signal Feed</div>
+        <div className="grid md:grid-cols-3 gap-3">
           {proposals.map((proposal) => (
-            <div key={proposal.id} className="rounded-lg border border-white/10 bg-background/70 p-4 space-y-3 text-sm">
+            <div key={proposal.id} className="rounded-lg border border-white/10 bg-background/70 p-3 space-y-2.5 text-sm">
               <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">{proposal.status}</div>
               <div className="font-semibold text-foreground/90">{proposal.title}</div>
               <div className="text-xs text-foreground/60">Owner {proposal.owner}</div>
@@ -903,10 +911,10 @@ function BoardIntelligenceView({
 
 function HeatChip({ label, value, tone, level }: { label: string; value: string; tone: string; level: number }) {
   return (
-    <div className="rounded-md border border-white/10 bg-white/10 px-2 py-1 space-y-1">
-      <div className="text-[10px] uppercase tracking-[0.14em] text-foreground/50">{label}</div>
+    <div className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 space-y-1.5">
+      <div className="text-[10px] uppercase tracking-[0.14em] text-foreground/55">{label}</div>
       <div className="text-xs font-semibold text-foreground/90">{value}</div>
-      <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-[6px] rounded-full bg-white/10 overflow-hidden">
         <div className={`h-full ${tone}`} style={{ width: `${Math.min(100, Math.max(0, level))}%` }} />
       </div>
     </div>
@@ -931,17 +939,17 @@ function BoardRiskView({
     security: false,
   })
   return (
-    <div className="py-6 space-y-6">
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6 space-y-5">
+    <div className="py-5 space-y-4">
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="liquid-panel p-4 md:p-5 space-y-4">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Risk Dashboard</div>
           <div className="text-2xl font-semibold text-foreground/90">{riskHeat}%</div>
           <div className="text-sm text-foreground/70">Average heat across open initiatives. Above 65% triggers emergency cadence.</div>
           <div className="text-xs text-foreground/60">Board confidence at {boardConfidence}%. Keep heat below tolerance to preserve voting momentum.</div>
         </div>
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6 space-y-4 text-sm text-foreground/70">
+        <div className="liquid-panel p-4 md:p-5 space-y-3 text-sm text-foreground/70">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Guardrail Matrix</div>
-          <div className="space-y-2 text-xs">
+          <div className="space-y-1.5 text-xs">
             {(['product', 'treasury', 'security'] as const).map((key) => (
               <label key={key} className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -958,7 +966,7 @@ function BoardRiskView({
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 p-5 md:p-6 space-y-5">
+      <div className="liquid-panel p-4 md:p-5 space-y-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Risk Appetite</div>
@@ -967,12 +975,12 @@ function BoardRiskView({
           <div className="text-sm font-semibold text-foreground/80">Tolerance {tolerance}%</div>
         </div>
         <input type="range" min={20} max={80} value={tolerance} onChange={(event) => setTolerance(Number(event.target.value))} className="w-full accent-amber-500" />
-        <div className="flex flex-wrap gap-2 text-[11px] text-foreground/60">
+        <div className="flex flex-wrap gap-1.5 text-[11px] text-foreground/60">
           <span className="px-2 py-0.5 rounded bg-white/10 border border-white/10">Escalates above tolerance</span>
           <span className="px-2 py-0.5 rounded bg-white/10 border border-white/10">Notifies guardrail owners</span>
           <span className="px-2 py-0.5 rounded bg-white/10 border border-white/10">Opens risk channel</span>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2.5">
           <button
             className="px-3 py-1.5 rounded-md bg-rose-500/80 text-foreground text-xs font-semibold tracking-[0.12em] hover:bg-rose-500/70"
             onClick={onLockdown}
@@ -1020,16 +1028,16 @@ function BoardControlRail({
 
   return (
     <div className="flex-1 min-h-0 flex flex-col">
-      <div className="px-5 py-4 border-b border-white/10">
+      <div className="px-4 py-3.5 border-b border-white/8">
         <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Action Rail</div>
         <div className="text-lg font-semibold text-foreground/90">Live Controls</div>
       </div>
-      <div className="flex-1 overflow-auto thin-scroll px-5 pb-6 space-y-5">
-        <div className="rounded-lg border border-white/10 bg-white/5 p-5 space-y-4">
+      <div className="flex-1 overflow-auto thin-scroll px-4 pb-5 space-y-4">
+        <div className="liquid-panel p-4 space-y-3.5">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Support Pulse</div>
           <div className="text-2xl font-semibold text-foreground/90">{avgSupport}%</div>
           <div className="text-xs text-foreground/60">Average support across open proposals. Aim for 65% before triggering votes.</div>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {proposals.map((proposal) => {
               const value = supportLevels[proposal.id] ?? proposal.baselineSupport
               return (
@@ -1047,7 +1055,7 @@ function BoardControlRail({
           </div>
         </div>
 
-        <div className="rounded-lg border border-white/10 bg-white/5 p-5 space-y-4">
+        <div className="liquid-panel p-4 space-y-3.5">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Scenario Dispatch</div>
           <div className="text-sm text-foreground/70">{scenario.title}</div>
           <div className="grid grid-cols-2 gap-2 text-[11px]">
@@ -1056,7 +1064,7 @@ function BoardControlRail({
             <HeatChip label="Burn" value={`${scenario.burnImpact >= 0 ? '+' : ''}${scenario.burnImpact}%`} tone="bg-rose-500/70" level={Math.abs(scenario.burnImpact) * 5} />
             <HeatChip label="Runway" value={`${scenario.runwayDelta >= 0 ? '+' : ''}${scenario.runwayDelta}w`} tone="bg-amber-500/70" level={Math.abs(scenario.runwayDelta) * 6} />
           </div>
-          <div className="flex flex-wrap gap-2.5">
+          <div className="flex flex-wrap gap-2">
             {BOARD_SCENARIOS.map((item, idx) => (
               <button
                 key={item.id}
@@ -1079,7 +1087,7 @@ function BoardControlRail({
           </button>
         </div>
 
-        <div className="rounded-lg border border-white/10 bg-white/5 p-5 space-y-4">
+        <div className="liquid-panel p-4 space-y-3">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Communication Channels</div>
           <div className="space-y-2 text-xs">
             <button
@@ -1107,5 +1115,26 @@ function BoardControlRail({
         </div>
       </div>
     </div>
+  )
+}
+
+function GlassDistortionDefs() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="0"
+      height="0"
+      aria-hidden="true"
+      focusable="false"
+      style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}
+    >
+      <defs>
+        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="1.4" result="blurred" />
+          <feDisplacementMap in="SourceGraphic" in2="blurred" scale="28" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
   )
 }

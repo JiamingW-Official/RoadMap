@@ -8,6 +8,7 @@ import { ContentProvider } from '../ui/providers/ContentProvider'
 import { Toaster } from '../components/ui/toast'
 import { CommandPalette } from '../components/CommandPalette'
 import { MarketTicker } from '../components/MarketTicker'
+import { GlassLightingController } from './GlassLightingController'
 
 export function App() {
   const [paletteOpen, setPaletteOpen] = React.useState(false)
@@ -54,6 +55,7 @@ export function App() {
           <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
           <MarketTicker />
           <CursorDot />
+          <GlassLightingController />
         </ContentProvider>
       </Toaster>
     </div>

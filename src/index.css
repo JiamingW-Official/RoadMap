@@ -52,16 +52,109 @@ body { @apply bg-background text-foreground antialiased; overflow: hidden; }
 }
 
 /* Liquid glass utility */
+:is(.glass, .liquid-panel) {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--liquid-radius, 14px);
+  isolation: isolate;
+  --liquid-light-x: 26%;
+  --liquid-light-y: 0%;
+  --liquid-light-strength: 0.08;
+  --liquid-light-secondary: 0.04;
+  background: rgba(8, 11, 18, var(--liquid-base-opacity, 0.32));
+  background-image:
+    linear-gradient(162deg, rgba(255, 255, 255, var(--liquid-top-glow, 0.045)) 0%, rgba(255, 255, 255, var(--liquid-mid-glow, 0.02)) 36%, rgba(6, 8, 16, var(--liquid-floor-shadow, 0.78)) 100%),
+    radial-gradient(120% 160% at 20% -12%, rgba(92, 162, 255, var(--liquid-iris, 0.12)) 0%, rgba(12, 16, 24, 0) 60%),
+    rgba(8, 11, 18, var(--liquid-base-opacity, 0.32));
+  border: 1px solid rgba(158, 188, 255, var(--liquid-border-opacity, 0.09));
+  box-shadow:
+    0 12px 28px rgba(6, 12, 24, var(--liquid-shadow-opacity, 0.3)),
+    inset 0 1px 0 rgba(255, 255, 255, var(--liquid-inner-highlight, 0.08)),
+    inset 0 -16px 32px rgba(6, 10, 20, var(--liquid-inner-shadow, 0.28));
+  backdrop-filter: blur(var(--liquid-blur, 12px)) saturate(var(--liquid-saturate, 112%));
+  -webkit-backdrop-filter: blur(var(--liquid-blur, 12px)) saturate(var(--liquid-saturate, 112%));
+  transition:
+    transform 0.36s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.36s ease,
+    box-shadow 0.36s ease,
+    background 0.6s ease;
+}
+
+:is(.glass, .liquid-panel)::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--liquid-radius, 14px) - 2px);
+  background: linear-gradient(186deg, rgba(255, 255, 255, var(--liquid-inner-top, 0.12)) 0%, rgba(255, 255, 255, var(--liquid-inner-mid, 0.03)) 48%, rgba(8, 10, 18, var(--liquid-inner-bottom, 0.52)) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, var(--liquid-inner-gloss, 0.1)),
+    inset 0 -18px 30px rgba(8, 12, 24, var(--liquid-inner-falloff, 0.32));
+  opacity: var(--liquid-inner-opacity, 0.68);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.45s ease;
+}
+
+:is(.glass, .liquid-panel)::after {
+  content: "";
+  position: absolute;
+  inset: -32% -22% -44% -22%;
+  background:
+    radial-gradient(120% 160% at var(--liquid-light-x) var(--liquid-light-y), rgba(255, 255, 255, var(--liquid-light-strength)) 0%, rgba(255, 255, 255, 0) 60%),
+    radial-gradient(82% 82% at 82% 88%, rgba(72, 203, 255, var(--liquid-light-secondary)) 0%, rgba(72, 203, 255, 0) 68%);
+  mix-blend-mode: screen;
+  filter: url(#glass-distortion);
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 0.4s ease, transform 0.5s ease, background 0.45s ease;
+  z-index: -1;
+}
+
+:is(.glass, .liquid-panel):hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 212, 255, 0.14);
+  box-shadow:
+    0 18px 40px rgba(8, 14, 26, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.liquid-panel[data-active="true"] {
+  border-color: rgba(245, 197, 24, 0.32);
+  box-shadow:
+    0 22px 44px rgba(245, 197, 24, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+:is(.glass, .liquid-panel) > * {
+  position: relative;
+  z-index: 1;
+}
+
 .glass {
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.06) 0%,
-    rgba(255,255,255,0.03) 100%
-  );
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+  --liquid-base-opacity: 0.26;
+  --liquid-mid-glow: 0.015;
+  --liquid-iris: 0.08;
+  --liquid-shadow-opacity: 0.28;
+  --liquid-inner-gloss: 0.08;
+  --liquid-inner-opacity: 0.62;
+  --liquid-light-strength: 0.06;
+  --liquid-light-secondary: 0.035;
+  --liquid-light-y: -6%;
+  --liquid-blur: 11px;
+  --liquid-saturate: 108%;
+}
+
+.liquid-panel {
+  --liquid-base-opacity: 0.3;
+  --liquid-mid-glow: 0.018;
+  --liquid-shadow-opacity: 0.32;
+  --liquid-inner-gloss: 0.1;
+  --liquid-inner-opacity: 0.7;
+  --liquid-light-strength: 0.075;
+  --liquid-light-secondary: 0.042;
+  --liquid-light-y: -4%;
+  --liquid-blur: 13px;
+  --liquid-saturate: 114%;
 }
 
 /* Hide native cursor (both body and #root) when enabled */
