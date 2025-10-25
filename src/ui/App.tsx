@@ -39,8 +39,8 @@ export function App() {
       <Toaster>
         <ContentProvider>
           <TopBar onOpenPalette={() => setPaletteOpen(true)} />
-          <div className="pt-20 h-[calc(100vh-80px)] w-full px-4 md:px-6">
-            <div className="grid grid-rows-[1fr] grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)_360px] gap-5 h-full">
+          <div className="pt-20 h-[calc(100vh-80px)] w-full px-3 md:px-4">
+            <div className="grid grid-rows-[1fr] grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)_360px] gap-4 h-full">
               <aside className="h-full overflow-hidden glass rounded-xl">
                 <LeftPane />
               </aside>

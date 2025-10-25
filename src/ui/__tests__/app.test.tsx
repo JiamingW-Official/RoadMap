@@ -20,7 +20,7 @@ function renderWithRoutes(initialEntries: string[]) {
 describe('App', () => {
   it('renders title in TopBar', () => {
     renderWithRoutes(['/'])
-    expect(screen.getByText('NYC Startup → IPO Simulator')).toBeInTheDocument()
+    expect(screen.getByText('Roadmap')).toBeInTheDocument()
   })
 
   it('routes to settings', async () => {

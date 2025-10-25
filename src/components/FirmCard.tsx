@@ -7,6 +7,53 @@ import { useGameStore } from '../store/game'
 import { useToast } from './ui/toast'
 import { CATEGORY_HEX } from '../constants/categories'
 
+// 滚动文本组件 - 自动跑马灯效果
+function ScrollingText({ children, className }: { children: string; className?: string }) {
+  const textRef = React.useRef<HTMLSpanElement>(null)
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [shouldScroll, setShouldScroll] = React.useState(false)
+
+  React.useEffect(() => {
+    const checkScroll = () => {
+      if (textRef.current && containerRef.current) {
+        const textWidth = textRef.current.scrollWidth
+        const containerWidth = containerRef.current.clientWidth
+        console.log('Text width:', textWidth, 'Container width:', containerWidth, 'Should scroll:', textWidth > containerWidth)
+        setShouldScroll(textWidth > containerWidth)
+      }
+    }
+    
+    checkScroll()
+    const timer1 = setTimeout(checkScroll, 100)
+    const timer2 = setTimeout(checkScroll, 500)
+    const timer3 = setTimeout(checkScroll, 1000)
+    
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+    }
+  }, [children])
+
+  return (
+    <div 
+      ref={containerRef}
+      className={cn('overflow-hidden', className)}
+    >
+      <span
+        ref={textRef}
+        className="inline-block whitespace-nowrap"
+        style={{
+          animation: shouldScroll ? 'scrollText 3s ease-in-out infinite' : 'none',
+          animationDelay: '0.5s'
+        }}
+      >
+        {children}
+      </span>
+    </div>
+  )
+}
+
 interface FirmCardProps {
   firm: FirmInput
   selected?: boolean
@@ -47,9 +94,9 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
   return (
     <div
       className={cn(
-        'group rounded-2xl border border-white/10 bg-background/45 backdrop-blur-md transition-all duration-200',
+        'group firm-card rounded-lg border border-white/10 bg-background/45 backdrop-blur-md transition-all duration-200 interactive-element',
         selected
-          ? 'border-accent/70 bg-background/70 shadow-[0_18px_45px_-25px_rgba(234,179,8,0.75)]'
+          ? 'border-accent/70 bg-background/70 shadow-[0_8px_25px_-15px_rgba(234,179,8,0.75)]'
           : 'hover:border-white/20 hover:bg-background/60'
       )}
       data-cursor="panel"
@@ -58,30 +105,30 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
         type="button"
         onClick={onSelect}
         className={cn(
-          'relative flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors',
+          'relative flex w-full items-center justify-between gap-2 px-3 py-1.5 text-left transition-colors',
           selected ? 'bg-white/6' : 'hover:bg-white/4'
         )}
         data-cursor="interactive"
       >
         <span
-          className="absolute left-3 top-2 bottom-2 w-1 rounded-full"
+          className="absolute left-2 top-3 bottom-3 w-1 rounded-full"
           style={{ background: categoryColor }}
           aria-hidden
         />
-        <div className="flex flex-col">
-          <span className="pl-4 text-sm font-semibold text-foreground/90 group-hover:text-foreground">
+        <div className="flex flex-col flex-1 min-w-0 max-w-[170px] pl-2">
+          <ScrollingText className="text-base font-semibold text-foreground/90 group-hover:text-foreground">
             {firm.firm_name}
-          </span>
+          </ScrollingText>
         </div>
         <span
-          className="rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
+          className="rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] flex-shrink-0"
           style={{ background: stageStyle.bg, borderColor: stageStyle.border, color: stageStyle.text }}
         >
           {stageLabel}
         </span>
       </button>
       {selected && (
-        <div className="space-y-3 px-4 pb-4 pt-2 text-sm text-foreground/80">
+        <div className="space-y-2 px-3 pb-3 pt-1 text-xs text-foreground/80">
           <div>
             <p className="text-xs uppercase tracking-[0.12em] text-foreground/50">Address</p>
             <p>{firm.hq_address}, {firm.city}, {firm.state}</p>

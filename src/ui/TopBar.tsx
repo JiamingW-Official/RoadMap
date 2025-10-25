@@ -31,12 +31,12 @@ export function TopBar({ onOpenPalette }: TopBarProps) {
 
   return (
     <div className="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/55 border-b border-border/60">
-      <div className="px-4 md:px-6 h-16 flex items-center justify-between">
+      <div className="px-3 md:px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div className="w-8 h-8 rounded-md bg-accent/90" />
           <div className="flex flex-col">
-            <span className="font-semibold tracking-wide">NYC Startup → IPO Simulator</span>
-            <div className="hidden md:flex items-center gap-3 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="text-lg font-semibold tracking-wide">Roadmap</span>
+            <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-[0.14em] text-muted-foreground">
               {navItems.map((item) => (
                 <NavLink
                   key={item.id}
@@ -51,7 +51,7 @@ export function TopBar({ onOpenPalette }: TopBarProps) {
             </div>
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-6 text-sm">
+        <div className="hidden md:flex items-center gap-6 text-base">
           <div className="flex items-center gap-2"><span className="text-muted-foreground">Date</span><span>{formattedDate}</span></div>
           <div className="flex items-center gap-2"><span className="text-muted-foreground">Cash</span><span className="text-accent">${cash.toLocaleString()}</span></div>
           <div className="flex items-center gap-2"><span className="text-muted-foreground">Valuation</span><span>${(valuation/1_000_000).toFixed(1)}M</span></div>
@@ -60,14 +60,9 @@ export function TopBar({ onOpenPalette }: TopBarProps) {
           <div className="flex items-center gap-2"><span className="text-muted-foreground">Actions</span><span>{actionsRemaining}</span></div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-1 text-xs bg-secondary/60 px-2 py-1 rounded-md">
-            {(['base','json','csv','all'] as const).map(k => (
-              <button key={k} onClick={()=>setSource(k)} className={`px-2 py-0.5 rounded ${source===k?'bg-accent text-[hsl(20,14%,4%)]':'hover:bg-secondary'}`}>{k.toUpperCase()}</button>
-            ))}
-          </div>
           <button
             onClick={onOpenPalette}
-            className="hidden md:flex items-center gap-2 rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-xs uppercase tracking-[0.15em] text-foreground/80 hover:bg-white/20"
+            className="hidden md:flex items-center gap-2 rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm uppercase tracking-[0.15em] text-foreground/80 hover:bg-white/20"
             data-cursor="interactive"
           >
             Command

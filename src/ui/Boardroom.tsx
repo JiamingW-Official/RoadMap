@@ -694,7 +694,7 @@ function BoardOverview({
           {proposals.map((proposal) => {
             const support = supportLevels[proposal.id] ?? proposal.baselineSupport
             return (
-              <div key={proposal.id} className="liquid-panel p-4 md:p-5">
+              <div key={proposal.id} className="liquid-panel interactive-panel p-4 md:p-5">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
@@ -1033,7 +1033,7 @@ function BoardControlRail({
         <div className="text-lg font-semibold text-foreground/90">Live Controls</div>
       </div>
       <div className="flex-1 overflow-auto thin-scroll px-4 pb-5 space-y-4">
-        <div className="liquid-panel p-4 space-y-3.5">
+        <div className="liquid-panel interactive-panel p-4 space-y-3.5">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Support Pulse</div>
           <div className="text-2xl font-semibold text-foreground/90">{avgSupport}%</div>
           <div className="text-xs text-foreground/60">Average support across open proposals. Aim for 65% before triggering votes.</div>
@@ -1055,7 +1055,7 @@ function BoardControlRail({
           </div>
         </div>
 
-        <div className="liquid-panel p-4 space-y-3.5">
+        <div className="liquid-panel interactive-panel p-4 space-y-3.5">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Scenario Dispatch</div>
           <div className="text-sm text-foreground/70">{scenario.title}</div>
           <div className="grid grid-cols-2 gap-2 text-[11px]">
@@ -1087,7 +1087,7 @@ function BoardControlRail({
           </button>
         </div>
 
-        <div className="liquid-panel p-4 space-y-3">
+        <div className="liquid-panel interactive-panel p-4 space-y-3">
           <div className="text-xs uppercase tracking-[0.14em] text-foreground/50">Communication Channels</div>
           <div className="space-y-2 text-xs">
             <button

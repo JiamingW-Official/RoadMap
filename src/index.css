@@ -51,7 +51,18 @@ body { @apply bg-background text-foreground antialiased; overflow: hidden; }
   100% { transform: translateX(-50%); }
 }
 
-/* Liquid glass utility */
+@keyframes scrollText {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(0); }
+  75% { transform: translateX(calc(-100% + 150px)); }
+  100% { transform: translateX(calc(-100% + 150px)); }
+}
+
+.animate-scroll-text {
+  animation: scrollText 4s ease-in-out infinite;
+}
+
+/* Liquid glass utility - 主要面板容器，禁用hover效果，变暗 */
 :is(.glass, .liquid-panel) {
   position: relative;
   overflow: hidden;
@@ -61,23 +72,26 @@ body { @apply bg-background text-foreground antialiased; overflow: hidden; }
   --liquid-light-y: 0%;
   --liquid-light-strength: 0.08;
   --liquid-light-secondary: 0.04;
-  background: rgba(8, 11, 18, var(--liquid-base-opacity, 0.32));
+  background: rgba(8, 11, 18, var(--liquid-base-opacity, 0.45));
   background-image:
-    linear-gradient(162deg, rgba(255, 255, 255, var(--liquid-top-glow, 0.045)) 0%, rgba(255, 255, 255, var(--liquid-mid-glow, 0.02)) 36%, rgba(6, 8, 16, var(--liquid-floor-shadow, 0.78)) 100%),
-    radial-gradient(120% 160% at 20% -12%, rgba(92, 162, 255, var(--liquid-iris, 0.12)) 0%, rgba(12, 16, 24, 0) 60%),
-    rgba(8, 11, 18, var(--liquid-base-opacity, 0.32));
-  border: 1px solid rgba(158, 188, 255, var(--liquid-border-opacity, 0.09));
+    linear-gradient(162deg, rgba(255, 255, 255, var(--liquid-top-glow, 0.025)) 0%, rgba(255, 255, 255, var(--liquid-mid-glow, 0.01)) 36%, rgba(6, 8, 16, var(--liquid-floor-shadow, 0.85)) 100%),
+    radial-gradient(120% 160% at 20% -12%, rgba(92, 162, 255, var(--liquid-iris, 0.08)) 0%, rgba(12, 16, 24, 0) 60%),
+    rgba(8, 11, 18, var(--liquid-base-opacity, 0.45));
+  border: 1px solid rgba(158, 188, 255, var(--liquid-border-opacity, 0.06));
   box-shadow:
-    0 12px 28px rgba(6, 12, 24, var(--liquid-shadow-opacity, 0.3)),
-    inset 0 1px 0 rgba(255, 255, 255, var(--liquid-inner-highlight, 0.08)),
-    inset 0 -16px 32px rgba(6, 10, 20, var(--liquid-inner-shadow, 0.28));
+    0 12px 28px rgba(6, 12, 24, var(--liquid-shadow-opacity, 0.4)),
+    inset 0 1px 0 rgba(255, 255, 255, var(--liquid-inner-highlight, 0.05)),
+    inset 0 -16px 32px rgba(6, 10, 20, var(--liquid-inner-shadow, 0.35));
   backdrop-filter: blur(var(--liquid-blur, 12px)) saturate(var(--liquid-saturate, 112%));
   -webkit-backdrop-filter: blur(var(--liquid-blur, 12px)) saturate(var(--liquid-saturate, 112%));
-  transition:
-    transform 0.36s cubic-bezier(0.33, 1, 0.68, 1),
-    border-color 0.36s ease,
-    box-shadow 0.36s ease,
-    background 0.6s ease;
+  /* 禁用面板本身的hover效果，但保持内容可交互 */
+  transition: none;
+}
+
+/* 确保面板内容可以交互 */
+:is(.glass, .liquid-panel) > * {
+  position: relative;
+  z-index: 1;
 }
 
 :is(.glass, .liquid-panel)::before {
@@ -110,13 +124,14 @@ body { @apply bg-background text-foreground antialiased; overflow: hidden; }
   z-index: -1;
 }
 
-:is(.glass, .liquid-panel):hover {
+/* 移除主要面板的hover效果 */
+/* :is(.glass, .liquid-panel):hover {
   transform: translateY(-2px);
   border-color: rgba(184, 212, 255, 0.14);
   box-shadow:
     0 18px 40px rgba(8, 14, 26, 0.34),
     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
+} */
 
 .liquid-panel[data-active="true"] {
   border-color: rgba(245, 197, 24, 0.32);
@@ -125,36 +140,65 @@ body { @apply bg-background text-foreground antialiased; overflow: hidden; }
     inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-:is(.glass, .liquid-panel) > * {
-  position: relative;
-  z-index: 1;
-}
 
 .glass {
-  --liquid-base-opacity: 0.26;
-  --liquid-mid-glow: 0.015;
-  --liquid-iris: 0.08;
-  --liquid-shadow-opacity: 0.28;
-  --liquid-inner-gloss: 0.08;
-  --liquid-inner-opacity: 0.62;
-  --liquid-light-strength: 0.06;
-  --liquid-light-secondary: 0.035;
+  --liquid-base-opacity: 0.4;
+  --liquid-mid-glow: 0.01;
+  --liquid-iris: 0.06;
+  --liquid-shadow-opacity: 0.35;
+  --liquid-inner-gloss: 0.05;
+  --liquid-inner-opacity: 0.55;
+  --liquid-light-strength: 0.04;
+  --liquid-light-secondary: 0.025;
   --liquid-light-y: -6%;
   --liquid-blur: 11px;
   --liquid-saturate: 108%;
 }
 
 .liquid-panel {
-  --liquid-base-opacity: 0.3;
-  --liquid-mid-glow: 0.018;
-  --liquid-shadow-opacity: 0.32;
-  --liquid-inner-gloss: 0.1;
-  --liquid-inner-opacity: 0.7;
-  --liquid-light-strength: 0.075;
-  --liquid-light-secondary: 0.042;
+  --liquid-base-opacity: 0.45;
+  --liquid-mid-glow: 0.012;
+  --liquid-shadow-opacity: 0.38;
+  --liquid-inner-gloss: 0.06;
+  --liquid-inner-opacity: 0.6;
+  --liquid-light-strength: 0.05;
+  --liquid-light-secondary: 0.03;
   --liquid-light-y: -4%;
   --liquid-blur: 13px;
-  --liquid-saturate: 114%;
+  --liquid-saturate: 110%;
+}
+
+/* 中间层级面板 - 这些面板需要鼠标交互效果，更加微妙 */
+.liquid-panel.interactive-panel {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.liquid-panel.interactive-panel:hover {
+  transform: translateY(-1px);
+  border-color: rgba(184, 212, 255, 0.08);
+  box-shadow:
+    0 8px 20px rgba(8, 14, 26, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  background: rgba(8, 11, 18, 0.5);
+}
+
+/* 可交互元素 - 只有这些元素才有hover效果 */
+.interactive-element {
+  transition: all 0.2s ease;
+}
+
+.interactive-element:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 按钮和可点击元素的hover效果 */
+button:hover, 
+[data-cursor="interactive"]:hover,
+.interactive-element:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Hide native cursor (both body and #root) when enabled */

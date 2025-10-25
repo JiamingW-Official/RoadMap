@@ -355,8 +355,8 @@ export function RightPane() {
   const [activeTab, setActiveTab] = useState<'overview' | 'market'>('overview')
 
   return (
-    <div className="h-full p-4 md:p-5 overflow-auto thin-scroll flex flex-col gap-4 text-sm">
-      <div className="flex items-center justify-between rounded-lg glass px-4 py-3 text-xs uppercase tracking-[0.12em]">
+    <div className="h-full px-2.5 md:px-3 py-3 md:py-3.5 overflow-auto thin-scroll flex flex-col gap-2.5 text-sm">
+      <div className="flex items-center justify-between rounded-lg glass px-3 py-2.5 text-xs uppercase tracking-[0.12em]">
         <button
           className={`rounded-md px-3 py-1 font-semibold transition ${
             activeTab === 'overview' ? 'bg-white/20 text-foreground' : 'text-foreground/50 hover:text-foreground/80'
@@ -378,8 +378,8 @@ export function RightPane() {
       </div>
 
       {activeTab === 'overview' && (
-        <div className="flex flex-col gap-4">
-          <div className="rounded-xl glass p-4 md:p-5 space-y-4">
+        <div className="flex flex-col gap-1.5">
+          <div className="rounded-xl glass interactive-panel p-2 md:p-3 space-y-2">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Current Week</div>
@@ -402,7 +402,7 @@ export function RightPane() {
             </button>
           </div>
 
-          <div className="rounded-xl glass p-4 md:p-5 space-y-4">
+          <div className="rounded-xl glass interactive-panel p-2 md:p-3 space-y-2">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Rounds</div>
@@ -430,7 +430,7 @@ export function RightPane() {
             {!canAct && <div className="text-xs text-muted-foreground">Action limit reached. Advance the week to continue.</div>}
           </div>
 
-          <div className="rounded-xl glass p-4 md:p-5 space-y-4">
+          <div className="rounded-xl glass interactive-panel p-2 md:p-3 space-y-2">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Economy</div>
@@ -440,7 +440,7 @@ export function RightPane() {
                 Hype {worldHype.toUpperCase()}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-1 text-xs">
               <span className="text-muted-foreground">Hype:</span>
               {(['bear','neutral','bull'] as const).map((mode) => (
                 <button
@@ -458,10 +458,10 @@ export function RightPane() {
             </div>
           </div>
 
-          <div className="rounded-xl glass p-4 md:p-5 space-y-4">
+          <div className="rounded-xl glass interactive-panel p-2 md:p-3 space-y-2">
             <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Finance Overview</div>
             <div className="text-base font-semibold text-foreground/90">Balance Snapshot</div>
-            <div className="space-y-3 text-xs">
+            <div className="space-y-1.5 text-xs">
               {balanceBars.map((item) => (
                 <div key={item.label}>
                   <div className="mb-1 flex items-center justify-between text-foreground/60">
@@ -474,10 +474,10 @@ export function RightPane() {
                 </div>
               ))}
             </div>
-            <div className="space-y-2 text-xs">
+            <div className="space-y-1 text-xs">
               <div className="text-foreground/60 font-medium">Cash Flow (YTD)</div>
               {cashFlowBars.map((item) => (
-                <div key={item.label} className="flex items-center gap-2">
+                <div key={item.label} className="flex items-center gap-1">
                   <span className="min-w-[72px] text-foreground/60">{item.label}</span>
                   <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                     <div className={`h-full ${item.color}`} style={{ width: item.width }} />
@@ -489,9 +489,12 @@ export function RightPane() {
             </div>
           </div>
 
-          <ValuationChart data={financials.valuationHistory} />
+          <div className="rounded-xl glass interactive-panel p-2 md:p-3 space-y-2">
+            <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Valuation</div>
+            <ValuationChart data={financials.valuationHistory} />
+          </div>
 
-          <div className="rounded-xl glass p-4 md:p-5 space-y-4">
+          <div className="rounded-xl glass interactive-panel p-2 md:p-3 space-y-2">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="text-xs uppercase tracking-[0.12em] text-foreground/50">Cap Table & Board</div>
@@ -501,7 +504,7 @@ export function RightPane() {
                 Shares {totalShares.toLocaleString()}
               </span>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
               <div className="relative h-28 w-28 rounded-full" style={{ background: pieGradient }}>
                 <div className="absolute inset-[22%] rounded-full bg-background/90" />
               </div>
@@ -515,7 +518,7 @@ export function RightPane() {
                 <div className="text-foreground/60">Outstanding shares: {totalShares.toLocaleString()}</div>
               </div>
             </div>
-            <div className="text-xs text-foreground/60 space-y-2">
+            <div className="text-xs text-foreground/60 space-y-1">
               <div className="uppercase tracking-[0.12em] text-foreground/50">Board Seats</div>
               {board.length === 0 ? (
                 <div className="text-muted-foreground/70">No external board members</div>

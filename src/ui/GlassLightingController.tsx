@@ -9,9 +9,8 @@ function resetPanel(panel: HTMLElement | null) {
 }
 
 /**
- * Subtle pointer-driven highlight controller for liquid/glass panels.
- * Attaches global listeners so any element matching `.glass` or `.liquid-panel`
- * across the app inherits the motion lighting without per-component wiring.
+ * Subtle pointer-driven highlight controller for interactive elements only.
+ * Only applies lighting effects to elements with interactive classes.
  */
 export function GlassLightingController() {
   React.useEffect(() => {
@@ -19,9 +18,19 @@ export function GlassLightingController() {
 
     const handlePointerMove = (event: PointerEvent) => {
       const target = event.target as HTMLElement | null
-      const panel = target?.closest?.('.liquid-panel, .glass') as HTMLElement | null
+      // 只对可交互元素生效，而不是主要面板
+      const panel = target?.closest?.('.interactive-element, [data-cursor="interactive"], button, .firm-card, .interactive-panel') as HTMLElement | null
 
       if (!panel) {
+        if (activePanel) {
+          resetPanel(activePanel)
+          activePanel = null
+        }
+        return
+      }
+
+      // 确保不是主要面板容器，但允许interactive-panel
+      if ((panel.classList.contains('glass') || panel.classList.contains('liquid-panel')) && !panel.classList.contains('interactive-panel')) {
         if (activePanel) {
           resetPanel(activePanel)
           activePanel = null
@@ -40,13 +49,13 @@ export function GlassLightingController() {
 
       panel.style.setProperty('--liquid-light-x', `${x}%`)
       panel.style.setProperty('--liquid-light-y', `${y}%`)
-      panel.style.setProperty('--liquid-light-strength', '0.16')
-      panel.style.setProperty('--liquid-light-secondary', '0.08')
+      panel.style.setProperty('--liquid-light-strength', '0.08')
+      panel.style.setProperty('--liquid-light-secondary', '0.04')
     }
 
     const handlePointerOut = (event: PointerEvent) => {
       const target = event.target as HTMLElement | null
-      const panel = target?.closest?.('.liquid-panel, .glass') as HTMLElement | null
+      const panel = target?.closest?.('.interactive-element, [data-cursor="interactive"], button, .firm-card, .interactive-panel') as HTMLElement | null
       if (!panel) return
       const related = event.relatedTarget as HTMLElement | null
       if (related && panel.contains(related)) return

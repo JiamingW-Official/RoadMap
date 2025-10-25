@@ -10,7 +10,7 @@ export function LeftPane() {
         <button className={`px-3 py-1.5 rounded-md ${tab==='events'?'bg-secondary':'bg-secondary/60'}`} onClick={()=>setTab('events')}>Events</button>
         <button className={`px-3 py-1.5 rounded-md ${tab==='rivals'?'bg-secondary':'bg-secondary/60'}`} onClick={()=>setTab('rivals')}>Rivals</button>
       </div>
-      <div className="flex-1 min-h-0 overflow-auto p-3 pb-6">
+      <div className="flex-1 min-h-0 overflow-auto p-2 pb-4">
         {tab === 'firms' && <FirmsList />}
         {tab === 'events' && (
           <div className="rounded-lg border border-border/60 bg-card/60 p-3">

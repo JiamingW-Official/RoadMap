@@ -32,17 +32,17 @@ export function FirmsList() {
   }, [filtered])
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-2">
       <input
         value={q}
         onChange={(e)=>setQ(e.target.value)}
         placeholder="Search firms..."
-        className="w-full rounded-lg bg-background/60 border border-border/60 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-accent/60"
+        className="w-full rounded-lg bg-background/60 border border-border/60 px-2 py-1.5 text-xs outline-none focus:ring-2 focus:ring-accent/60"
       />
-      <div className="thin-scroll max-h-[62vh] overflow-auto grid gap-5 pr-1">
+      <div className="thin-scroll max-h-[62vh] overflow-auto grid gap-3 pr-1">
         {grouped.map(({ cat, items }) => (
           items.length > 0 && (
-            <div key={cat} className="grid gap-2">
+            <div key={cat} className="grid gap-1">
               <div className="flex items-center gap-2 px-1 text-[11px] uppercase tracking-[0.15em] text-foreground/50">
                 <span
                   className="h-1.5 w-6 rounded-full"
@@ -50,7 +50,7 @@ export function FirmsList() {
                 />
                 {cat}
               </div>
-              <div className="grid gap-3">{
+              <div className="grid gap-1.5">{
                 items.map((firm) => (
                   <FirmCard
                     key={firm.id}
