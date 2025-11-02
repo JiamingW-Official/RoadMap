@@ -126,9 +126,10 @@ export function useContent() {
 
   const load = React.useCallback(async (src: DatasetSource) => {
     setError(null)
+    const baseUrl = import.meta.env.BASE_URL
     const [baseFirms, baseEconomy] = await Promise.all([
-      fetchJson<any[]>(`/startup_ipo_game_pack/data/firms.json`, []),
-      fetchJson<any>(`/startup_ipo_game_pack/data/economy.json`, {}),
+      fetchJson<any[]>(`${baseUrl}startup_ipo_game_pack/data/firms.json`, []),
+      fetchJson<any>(`${baseUrl}startup_ipo_game_pack/data/economy.json`, {}),
     ])
 
     const baseValid = baseFirms.map((r, i) => normalizeFirm(r, toNegativeId(80000 + i), 'base')).filter(Boolean) as FirmInput[]
@@ -138,16 +139,16 @@ export function useContent() {
     // JSON dataset (prefer root override, fallback to /datasets)
     let jsonFirms: FirmInput[] = []
     try {
-      const jfRoot = await fetchJson<any[]>(`/nyc_firms.json`, null as any)
-      const jf = jfRoot ?? await fetchJson<any[]>(`/datasets/nyc_firms.json`, [])
+      const jfRoot = await fetchJson<any[]>(`${baseUrl}nyc_firms.json`, null as any)
+      const jf = jfRoot ?? await fetchJson<any[]>(`${baseUrl}datasets/nyc_firms.json`, [])
       jsonFirms = jf.map((r, i) => normalizeFirm(r, toNegativeId(1000 + i), 'json')).filter(Boolean) as FirmInput[]
     } catch { /* noop */ }
 
     // CSV dataset (prefer root override, fallback to /datasets)
     let csvFirms: FirmInput[] = []
     try {
-      let text = await fetch(`/nyc_firms.csv`).then(r => r.ok ? r.text() : '')
-      if (!text) text = await fetch(`/datasets/nyc_firms.csv`).then(r => r.ok ? r.text() : '')
+      let text = await fetch(`${baseUrl}nyc_firms.csv`).then(r => r.ok ? r.text() : '')
+      if (!text) text = await fetch(`${baseUrl}datasets/nyc_firms.csv`).then(r => r.ok ? r.text() : '')
       const parsed = Papa.parse(text, { header: true, skipEmptyLines: true })
       csvFirms = (parsed.data as any[]).map((r, i) => normalizeFirm({
         id: toNegativeId(2000 + i),
