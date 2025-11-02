@@ -47,8 +47,11 @@ jobs:
           ls -la dist/assets/ || echo "No assets directory"
           cat dist/index.html | head -15
 
-      - name: Create .nojekyll
-        run: echo "" > dist/.nojekyll
+      - name: Create .nojekyll file
+        run: |
+          touch dist/.nojekyll
+          echo "Created .nojekyll file"
+          ls -la dist/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
