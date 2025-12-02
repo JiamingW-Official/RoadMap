@@ -295,7 +295,7 @@ export function MapView() {
       <div className="absolute top-4 left-4 z-[4000] w-72 max-w-[85vw]">
         <form
           onSubmit={handleSearchSubmit}
-          className="flex flex-col gap-2 rounded-xl border border-border/60 bg-background/90 backdrop-blur px-3 py-3 shadow-lg"
+          className="flex flex-col gap-2 rounded-xl border border-border/60 bg-background/95 px-3 py-3 shadow-lg"
         >
           <label className="text-xs uppercase tracking-[0.08em] font-semibold text-foreground/60">
             Search Map
@@ -349,7 +349,7 @@ export function MapView() {
             </div>
           )}
         </form>
-        <div className="mt-3 flex flex-col gap-2 rounded-xl border border-border/60 bg-background/85 backdrop-blur px-3 py-3 shadow-lg">
+        <div className="mt-3 flex flex-col gap-2 rounded-xl border border-border/60 bg-background/90 px-3 py-3 shadow-lg">
           <div className="flex items-center justify-between">
             <span className="text-xs uppercase tracking-[0.08em] font-semibold text-foreground/60">Filter Categories</span>
             <button
@@ -392,6 +392,10 @@ export function MapView() {
         scrollWheelZoom
         zoomControl={false}
         className="h-full"
+        preferCanvas={true}
+        worldCopyJump={false}
+        updateWhenZooming={false}
+        updateWhenIdle={true}
       >
         <MapReady onMap={(m) => (mapRef.current = m)} />
         <Basemap />
@@ -410,6 +414,7 @@ export function MapView() {
           const secondaryColor = secondaryCategory ? CATEGORY_HEX[secondaryCategory] : undefined
           const hasPlaceholder = entries.every(({ hasOriginalPos, hasOverridePos }) => !hasOriginalPos && !hasOverridePos)
           const isSelected = selectedAggregate?.key === key
+          const firmId = entries[0]?.firm.id ?? null
           return (
             <Marker
               key={key}
@@ -421,27 +426,45 @@ export function MapView() {
               }}
               eventHandlers={{
                 click: () => {
-                  setSelectedFirmId(entries[0]?.firm.id ?? null)
+                  setSelectedFirmId(firmId)
                 },
               }}
+              interactive={true}
+              bubblingMouseEvents={false}
+              zIndexOffset={isSelected ? 1000 : 0}
             />
           )
         })}
       </MapContainer>
       {selectedAggregate && (
         <div className="pointer-events-none absolute top-6 right-6 z-[4000] w-[340px] max-w-[85vw]">
-          <div className="pointer-events-auto overflow-hidden rounded-[26px] border border-white/12 bg-gradient-to-br from-white/12 via-background/45 to-background/20 backdrop-blur-2xl shadow-[0_30px_60px_-20px_rgba(15,23,42,0.55)]">
+          <div className="pointer-events-auto overflow-hidden rounded-[26px] border border-white/12 bg-gradient-to-br from-white/12 via-background/70 to-background/50 shadow-[0_30px_60px_-20px_rgba(15,23,42,0.55)]">
             <div className="relative p-5">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_55%)] pointer-events-none" />
               <div className="relative flex items-start justify-between gap-3">
-                <div>
-                  <h3 className="text-lg font-semibold tracking-wide text-foreground/95">{selectedAggregate.displayName}</h3>
-                  <p className="text-sm text-foreground/70">{selectedAggregate.address}</p>
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                  {selectedAggregate.entries[0]?.firm.logo_url && (
+                    <img
+                      src={selectedAggregate.entries[0].firm.logo_url}
+                      alt={selectedAggregate.displayName}
+                      className="h-20 w-20 object-contain flex-shrink-0 rounded-lg bg-white/5 p-2"
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="high"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-semibold tracking-wide text-foreground/95">{selectedAggregate.displayName}</h3>
+                    <p className="text-sm text-foreground/70">{selectedAggregate.address}</p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setSelectedFirmId(null)}
                   aria-label="Close"
-                  className="rounded-full bg-white/10 hover:bg-white/20 text-xs uppercase tracking-[0.15em] px-3 py-1 text-foreground/75"
+                  className="rounded-full bg-white/10 hover:bg-white/20 text-xs uppercase tracking-[0.15em] px-3 py-1 text-foreground/75 flex-shrink-0"
                   data-cursor="interactive"
                 >
                   Close

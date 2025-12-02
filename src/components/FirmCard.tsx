@@ -7,8 +7,8 @@ import { useGameStore } from '../store/game'
 import { useToast } from './ui/toast'
 import { CATEGORY_HEX } from '../constants/categories'
 
-// 滚动文本组件 - 自动跑马灯效果
-function ScrollingText({ children, className }: { children: string; className?: string }) {
+// 滚动文本组件 - 自动跑马灯效果（优化版）
+const ScrollingText = React.memo(({ children, className }: { children: string; className?: string }) => {
   const textRef = React.useRef<HTMLSpanElement>(null)
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [shouldScroll, setShouldScroll] = React.useState(false)
@@ -18,20 +18,19 @@ function ScrollingText({ children, className }: { children: string; className?: 
       if (textRef.current && containerRef.current) {
         const textWidth = textRef.current.scrollWidth
         const containerWidth = containerRef.current.clientWidth
-        console.log('Text width:', textWidth, 'Container width:', containerWidth, 'Should scroll:', textWidth > containerWidth)
         setShouldScroll(textWidth > containerWidth)
       }
     }
     
-    checkScroll()
-    const timer1 = setTimeout(checkScroll, 100)
-    const timer2 = setTimeout(checkScroll, 500)
-    const timer3 = setTimeout(checkScroll, 1000)
+    // 使用 requestAnimationFrame 优化性能
+    const rafId = requestAnimationFrame(() => {
+      checkScroll()
+      // 只检查一次，减少性能开销
+      setTimeout(checkScroll, 200)
+    })
     
     return () => {
-      clearTimeout(timer1)
-      clearTimeout(timer2)
-      clearTimeout(timer3)
+      cancelAnimationFrame(rafId)
     }
   }, [children])
 
@@ -52,7 +51,8 @@ function ScrollingText({ children, className }: { children: string; className?: 
       </span>
     </div>
   )
-}
+})
+ScrollingText.displayName = 'ScrollingText'
 
 interface FirmCardProps {
   firm: FirmInput
@@ -82,7 +82,7 @@ const stageShortMap: Record<string, string> = {
   'Post-IPO': 'POST',
 }
 
-export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
+export const FirmCard = React.memo(function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
   const applyDeal = useGameStore((s) => s.applyDeal)
   const canAct = useGameStore((s) => s.canActThisWeek())
   const { notify } = useToast()
@@ -94,7 +94,7 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
   return (
     <div
       className={cn(
-        'group firm-card rounded-lg border border-white/10 bg-background/45 backdrop-blur-md transition-all duration-200 interactive-element',
+        'group firm-card rounded-lg border border-white/10 bg-background/60 transition-all duration-200 interactive-element',
         selected
           ? 'border-accent/70 bg-background/70 shadow-[0_8px_25px_-15px_rgba(234,179,8,0.75)]'
           : 'hover:border-white/20 hover:bg-background/60'
@@ -115,7 +115,20 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
           style={{ background: categoryColor }}
           aria-hidden
         />
-        <div className="flex flex-col flex-1 min-w-0 max-w-[170px] pl-2">
+        <div className="flex items-center gap-2 flex-1 min-w-0 max-w-[170px] pl-2">
+          {firm.logo_url && (
+            <img
+              src={firm.logo_url}
+              alt={firm.firm_name}
+              className="h-6 w-6 object-contain flex-shrink-0"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => {
+                // Hide image if it fails to load
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          )}
           <ScrollingText className="text-base font-semibold text-foreground/90 group-hover:text-foreground">
             {firm.firm_name}
           </ScrollingText>
@@ -129,10 +142,40 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
       </button>
       {selected && (
         <div className="space-y-2 px-3 pb-3 pt-1 text-xs text-foreground/80">
+          {firm.description && (
+            <div>
+              <p className="text-xs uppercase tracking-[0.12em] text-foreground/50 mb-1">Description</p>
+              <p className="text-foreground/75">{firm.description}</p>
+            </div>
+          )}
           <div>
             <p className="text-xs uppercase tracking-[0.12em] text-foreground/50">Address</p>
             <p>{firm.hq_address}, {firm.city}, {firm.state}</p>
           </div>
+          {firm.entry_barrier && (
+            <div>
+              <p className="text-xs uppercase tracking-[0.12em] text-foreground/50">Entry Barrier</p>
+              <p className="text-foreground/75">{firm.entry_barrier}</p>
+            </div>
+          )}
+          {firm.role_in_ipo && (
+            <div>
+              <p className="text-xs uppercase tracking-[0.12em] text-foreground/50">Role in IPO</p>
+              <p className="text-foreground/75">{firm.role_in_ipo}</p>
+            </div>
+          )}
+          {firm.typical_check_size && (
+            <div>
+              <p className="text-xs uppercase tracking-[0.12em] text-foreground/50">Typical Check Size</p>
+              <p className="text-foreground/75">{firm.typical_check_size}</p>
+            </div>
+          )}
+          {firm.notes && (
+            <div>
+              <p className="text-xs uppercase tracking-[0.12em] text-foreground/50">Notes</p>
+              <p className="text-foreground/75">{firm.notes}</p>
+            </div>
+          )}
           <div className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.12em] text-foreground/60">
             <div className="flex items-center gap-2">
               <span>Difficulty</span>
@@ -188,4 +231,11 @@ export function FirmCard({ firm, selected = false, onSelect }: FirmCardProps) {
       )}
     </div>
   )
-}
+}, (prevProps, nextProps) => {
+  // 自定义比较函数，只在关键属性变化时重渲染
+  return (
+    prevProps.firm.id === nextProps.firm.id &&
+    prevProps.selected === nextProps.selected &&
+    prevProps.firm.logo_url === nextProps.firm.logo_url
+  )
+})

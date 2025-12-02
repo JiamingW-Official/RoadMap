@@ -21,6 +21,19 @@ export const FirmZ = z.object({
   growth_speed_effect: z.number().optional(),
   position: LatLngTupleZ.optional(),
   __source: z.enum(["base","json","csv","merged"]).optional(),
+  // Additional fields from interactive-archive
+  logo_url: z.string().optional(),
+  entry_barrier: z.string().optional(),
+  role_in_ipo: z.string().optional(),
+  typical_check_size: z.string().optional(),
+  focus_stage: z.string().optional(),
+  notes: z.string().optional(),
+  player_requirement: z.string().optional(),
+  bg_color: z.string().optional(),
+  accent_color: z.string().optional(),
+  description: z.string().optional(),
+  quote_style_line: z.string().optional(),
+  success_modifier: z.number().optional(),
 })
 
 export type FirmInput = z.infer<typeof FirmZ>

@@ -77,6 +77,19 @@ function normalizeFirm(input: any, fallbackId: number, source: FirmInput['__sour
       growth_speed_effect: typeof input.growth_speed_effect === 'number' ? input.growth_speed_effect : parseNum(input.growth_speed_effect),
       position: maybePos,
       __source: source,
+      // Additional fields from interactive-archive
+      logo_url: input.logo_url,
+      entry_barrier: input.entry_barrier,
+      role_in_ipo: input.role_in_ipo,
+      typical_check_size: input.typical_check_size,
+      focus_stage: input.focus_stage,
+      notes: input.notes,
+      player_requirement: input.player_requirement,
+      bg_color: input.bg_color,
+      accent_color: input.accent_color,
+      description: input.description,
+      quote_style_line: input.quote_style_line,
+      success_modifier: typeof input.success_modifier === 'number' ? input.success_modifier : parseNum(input.success_modifier),
     }
     const parsed = FirmZ.safeParse(base)
     if (!parsed.success) return null
@@ -173,7 +186,6 @@ export function useContent() {
     else if (src === 'json') final = jsonFirms
     else if (src === 'csv') final = csvFirms
     else final = dedupeMerge(dedupeMerge(baseValid, csvFirms), jsonFirms)
-
     setFirms(final)
   }, [])
 

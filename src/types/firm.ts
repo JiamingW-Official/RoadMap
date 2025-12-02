@@ -26,4 +26,17 @@ export interface Firm {
   growth_speed_effect?: number
   position?: LatLngTuple
   __source?: 'base' | 'json' | 'csv' | 'merged'
+  // Additional fields from interactive-archive
+  logo_url?: string
+  entry_barrier?: string
+  role_in_ipo?: string
+  typical_check_size?: string
+  focus_stage?: string
+  notes?: string
+  player_requirement?: string
+  bg_color?: string
+  accent_color?: string
+  description?: string
+  quote_style_line?: string
+  success_modifier?: number
 }
