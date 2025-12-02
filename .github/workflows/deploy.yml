@@ -6,7 +6,6 @@ on:
       - main
   workflow_dispatch:  # Manual trigger option
 
-
 permissions:
   contents: read
   pages: write
@@ -27,25 +26,67 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9.10.0
 
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install --frozen-lockfile
+        continue-on-error: false
+
+      - name: Verify dependencies
+        run: |
+          echo "Checking installed packages..."
+          pnpm list --depth=0 || true
+          echo "Node version: $(node --version)"
+          echo "pnpm version: $(pnpm --version)"
 
       - name: Build
-        run: pnpm build
+        run: |
+          echo "Building project..."
+          pnpm build
         env:
           NODE_ENV: production
+        continue-on-error: false
 
       - name: Verify build output
         run: |
+          echo "Checking build output..."
+          if [ ! -d "dist" ]; then
+            echo "ERROR: dist directory does not exist!"
+            exit 1
+          fi
           ls -la dist/
-          ls -la dist/assets/ || echo "No assets directory"
-          cat dist/index.html | head -15
+          if [ -d "dist/assets" ]; then
+            echo "Assets directory found:"
+            ls -la dist/assets/ | head -20
+          else
+            echo "WARNING: No assets directory found"
+          fi
+          if [ -f "dist/index.html" ]; then
+            echo "index.html found:"
+            head -20 dist/index.html
+          else
+            echo "ERROR: index.html not found!"
+            exit 1
+          fi
 
       - name: Create .nojekyll file
         run: |
