@@ -394,8 +394,6 @@ export function MapView() {
         className="h-full"
         preferCanvas={true}
         worldCopyJump={false}
-        updateWhenZooming={false}
-        updateWhenIdle={true}
       >
         <MapReady onMap={(m) => (mapRef.current = m)} />
         <Basemap />
